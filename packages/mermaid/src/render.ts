@@ -2,11 +2,11 @@ import mermaid from 'mermaid'
 import type { MermaidPageAction } from './page'
 
 export const createMermaidRenderer = (
-  id: string,
+  container: HTMLElement,
 ) => {
   mermaid.initialize({
     startOnLoad: true,
-    theme: 'dark',
+    theme: 'neutral',
   })
 
   const content: string[] = []
@@ -17,7 +17,10 @@ export const createMermaidRenderer = (
         content.length = 0
         content.push(action.options.content)
       }
-      mermaid.render(id, content.join('\n\n'))
+      console.log('load', content.join('\n\n'))
+      mermaid.render(`${container.id}-mermaid`, content.join('\n\n')).then((result) => {
+        container.innerHTML = result.svg
+      })
     }
   }
 

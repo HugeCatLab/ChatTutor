@@ -5,6 +5,7 @@ import { PageType } from '@chat-tutor/shared'
 import type { Action, FullAction, Page } from '@chat-tutor/shared'
 import type { ReadableStream } from 'node:stream/web'
 import type { CanvasPage } from '@chat-tutor/canvas'
+import type { MermaidPage } from '@chat-tutor/mermaid'
 
 export type TextChunkAction = Action<{ chunk: string }, 'text'>
 export type PageCreationAction<T extends Page = Page> = Action<T, 'page'>
@@ -58,6 +59,10 @@ export const createAgent = (options: AgentOptions) => {
         if (chunk.toolName === 'create_canvas') {
           const { id, title, range, domain, axis, grid } = JSON.parse(chunk.args) as { id: string, title: string, range: [number, number], domain: [number, number], axis: boolean, grid: boolean }
           yield { type: 'page', options: { id, title, type: PageType.CANVAS, range, domain, axis, grid, steps: [], notes: [] } } satisfies PageCreationAction<CanvasPage>
+        }
+        if (chunk.toolName === 'create_mermaid') {
+          const { id, title } = JSON.parse(chunk.args) as { id: string, title: string }
+          yield { type: 'page', options: { id, title, type: PageType.MERMAID, steps: [], notes: [] } } satisfies PageCreationAction<MermaidPage>
         }
         if (chunk.toolName === 'note') {
           const { page, content } = JSON.parse(chunk.args) as { page: string, content: string }

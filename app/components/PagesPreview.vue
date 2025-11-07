@@ -7,6 +7,7 @@ defineProps<{
 
 const emojiMap: Record<string, string> = {
   [PageType.CANVAS]: '🎨',
+  [PageType.MERMAID]: '📈',
 }
 
 defineEmits<{

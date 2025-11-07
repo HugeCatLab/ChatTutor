@@ -3,8 +3,9 @@ import type { ActionHandler } from './useBoard'
 import type { FullAction, Action } from '@chat-tutor/shared'
 import type { PageCreationAction, TextChunkAction } from '@chat-tutor/agent'
 import type { CanvasPageAction } from '@chat-tutor/canvas'
+import type { MermaidPageAction } from '@chat-tutor/mermaid'
 
-export type AllAction = FullAction | Action | PageCreationAction | TextChunkAction | CanvasPageAction
+export type AllAction = FullAction | Action | PageCreationAction | TextChunkAction | CanvasPageAction | MermaidPageAction
 
 export const useChat = (
   handleAction: ActionHandler,

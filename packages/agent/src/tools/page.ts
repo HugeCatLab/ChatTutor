@@ -58,12 +58,9 @@ export const getPageTools = async (pages: Page[]) => {
       title: 'string',
     }),
     execute: async ({ id, title }) => {
-      const targetPage = pages.find(p => p.id === id)
-      if (!targetPage) {
-        return {
-          success: false,
-          message: 'Page not found',
-        }
+      const result = checkExist(id)
+      if (result) {
+        return result
       }
       pages.push({
         id,
