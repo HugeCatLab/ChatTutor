@@ -1,10 +1,11 @@
 import { type Tool, tool } from 'xsai'
 import { type } from 'arktype'
 import { ElementAction } from '@chat-tutor/canvas'
-import type { Page } from '@chat-tutor/shared'
+import type { ActionResolverMap, Page } from '@chat-tutor/shared'
 import { MermaidPageSetAction } from '@chat-tutor/mermaid'
 
 const Actions = type.or(ElementAction, MermaidPageSetAction)
+const actionResolvers: ActionResolverMap = new Map()
 
 export const getActionTools = async (pages: Page[]) => {
   const act = tool({
@@ -25,7 +26,16 @@ export const getActionTools = async (pages: Page[]) => {
       targetPage.steps.push(...actions.map(action => ({ ...action, page: targetPage.id })))
       return {
         success: true,
-        message: 'Actions performed successfully',
+        messages: actions.map(a => {
+          const resolver = actionResolvers.get(a.type)
+          if (resolver) {
+            return resolver(a, targetPage)
+          }
+          return {
+            success: true,
+            action: a.type,
+          }
+        }),
         page: targetPage.id,
         actions: actions.length
       }

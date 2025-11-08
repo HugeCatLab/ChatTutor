@@ -167,6 +167,15 @@ importers:
         specifier: ^1.12.0
         version: 1.12.0
 
+  packages/code:
+    dependencies:
+      '@chat-tutor/shared':
+        specifier: workspace:*
+        version: link:../shared
+      arktype:
+        specifier: ^2.1.25
+        version: 2.1.25
+
   packages/mermaid:
     dependencies:
       '@chat-tutor/shared':
