@@ -1,28 +1,23 @@
-import { message, streamText, type Message, type StreamTextEvent } from 'xsai'
-import * as prompts from './prompts'
-import { getPageTools, getActionTools } from './tools'
-import { PageType } from '@chat-tutor/shared'
+import { message, streamText } from 'xsai'
+import { agent } from './prompts'
+import { getAgentTools } from './tools'
 import type { Action, FullAction, Page } from '@chat-tutor/shared'
 import type { ReadableStream } from 'node:stream/web'
-import type { CanvasPage } from '@chat-tutor/canvas'
-import type { MermaidPage } from '@chat-tutor/mermaid'
+import type { AgentChunker, BaseAgentOptions } from './types'
 
 export type TextChunkAction = Action<{ chunk: string }, 'text'>
 export type PageCreationAction<T extends Page = Page> = Action<T, 'page'>
 export type PageNoteAction = FullAction<{ content: string }, 'note'>
 
-export interface AgentOptions {
-  apiKey: string
-  baseURL: string
-  model: string
-  messages: Message[]
+export interface AgentOptions extends BaseAgentOptions {
   pages: Page[]
+  painter: BaseAgentOptions
 }
 
 export const createAgent = (options: AgentOptions) => {
   if (options.messages.length === 0 || options.messages[0].role !== 'system') {
     options.messages.unshift(
-      message.system(prompts.system())
+      message.system(agent.system())
     )
   }
 
@@ -30,15 +25,22 @@ export const createAgent = (options: AgentOptions) => {
     images?: string[]
   }
    
-  return async function* (input: string, { images }: AdditionalInput = {}): AsyncGenerator<FullAction> {
+  return async (
+    input: string,
+    chunker: AgentChunker,
+    { images }: AdditionalInput = {}
+  ) => {
     const tools = (await Promise.all([
-      getPageTools(options.pages),
-      getActionTools(options.pages)
+      getAgentTools({
+        pages: options.pages,
+        painterOptions: options.painter,
+        chunker,
+      }),
     ])).flat()
     options.messages.push(message.user(
       [message.textPart(input), ...(images ?? []).map(i => message.imagePart(i))]
     ))
-    const { fullStream, messages } = streamText({
+    const { textStream, messages } = streamText({
       model: options.model,
       apiKey: options.apiKey,
       baseURL: options.baseURL,
@@ -50,30 +52,19 @@ export const createAgent = (options: AgentOptions) => {
       options.messages.length = 0
       options.messages.push(...ms)
     })
-    for await (const chunk of <ReadableStream<StreamTextEvent>>fullStream) {
-      if (chunk.type === 'text-delta') {
-        yield { type: 'text', options: { chunk: chunk.text } } satisfies TextChunkAction
-      }
-      if (chunk.type === 'tool-call') {
-        if (chunk.toolName === 'act') {
-          const { actions, page } = JSON.parse(chunk.args) as { page: string, actions: FullAction[] }
-          for (const action of actions) {
-            yield { ...action, page }
-          }
-        }
-        if (chunk.toolName === 'create_canvas') {
-          const { id, title, range, domain, axis, grid } = JSON.parse(chunk.args) as { id: string, title: string, range: [number, number], domain: [number, number], axis: boolean, grid: boolean }
-          yield { type: 'page', options: { id, title, type: PageType.CANVAS, range, domain, axis, grid, steps: [], notes: [] } } satisfies PageCreationAction<CanvasPage>
-        }
-        if (chunk.toolName === 'create_mermaid') {
-          const { id, title } = JSON.parse(chunk.args) as { id: string, title: string }
-          yield { type: 'page', options: { id, title, type: PageType.MERMAID, steps: [], notes: [] } } satisfies PageCreationAction<MermaidPage>
-        }
-        if (chunk.toolName === 'note') {
-          const { page, content } = JSON.parse(chunk.args) as { page: string, content: string }
-          yield { type: 'note', options: { content }, page } satisfies PageNoteAction
-        }
-      }
+    for await (const chunk of <ReadableStream<string>>textStream) {
+      chunker({
+        type: 'text',
+        options: { chunk },
+      } as TextChunkAction)
+    }
+    return {
+      success: true,
+      message: 'Agent completed',
     }
   }
 }
+
+export * from './tools'
+export * from './painter'
+export * from './types'

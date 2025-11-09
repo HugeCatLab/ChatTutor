@@ -1,5 +1,6 @@
 import { db } from '#shared/db'
 import { chat } from '#shared/db/chat'
+import type { Context } from '#shared/types'
 
 export default defineEventHandler(async () => {
   const [{ id }] = await db
@@ -7,7 +8,10 @@ export default defineEventHandler(async () => {
     .values({
       title: 'Untitled',
       messages: [],
-      context: [],
+      context: {
+        agent: [],
+        painter: [],
+      } satisfies Context,
       status: Status.PENDING,
       pages: [],
     })

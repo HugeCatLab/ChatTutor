@@ -57,6 +57,10 @@ export const createCanvasRenderer = (id: string, options: CanvasRendererOptions)
     }))
   }
 
+  const setBound = (range: [number, number], domain: [number, number]) => {
+    board.setBoundingBox([domain[0], range[1], domain[1], range[0]])
+  }
+
   const add = (action: ElementAction) => {
     const element = elements.get(action.options.name)
     if (element) {
@@ -78,6 +82,7 @@ export const createCanvasRenderer = (id: string, options: CanvasRendererOptions)
   return {
     board,
     getElement,
+    setBound,
     load,
     add,
   }

@@ -1,2 +1,2 @@
-export * from './page'
-export * from './action'
+export * from './agent'
+export * from './painter'

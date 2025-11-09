@@ -1,20 +1,20 @@
-import { createAgent } from '@chat-tutor/agent'
+import { createAgent, type AgentChunker } from '@chat-tutor/agent'
 import { db } from '#shared/db'
 import { chat } from '#shared/db/chat'
 import { eq } from 'drizzle-orm'
-import type { Message } from 'xsai'
-import type { Page } from '@chat-tutor/shared'
-import type { Message as DisplayMessage } from '#shared/types'
+import type { FullAction, Page } from '@chat-tutor/shared'
+import type { Message as DisplayMessage, Context } from '#shared/types'
 
 export default defineEventHandler(async (event) => {
   const apiKey = process.env.API_KEY!
   const baseURL = process.env.BASE_URL!
-  const model = process.env.MODELS!.split(',')[0]!
+  const agentModel = process.env.AGENT_MODEL!
+  const painterModel = process.env.PAINTER_MODEL!
   const { input } = getQuery(event) as { input: string }
   const { id } = getRouterParams(event)
 
   const [{ pages, context, status, messages }]
-    = await db.select().from(chat).where(eq(chat.id, id)) as { pages: Page[], context: Message[], status: Status, messages: DisplayMessage[] }[]
+    = await db.select().from(chat).where(eq(chat.id, id)) as { pages: Page[], context: Context, status: Status, messages: DisplayMessage[] }[]
   const updateStatus = async (status: Status) => await db.update(chat).set({ status }).where(eq(chat.id, id))
 
   if (status === Status.RUNNING) {
@@ -23,6 +23,9 @@ export default defineEventHandler(async (event) => {
       statusMessage: 'Chat is running',
     })
   }
+
+  context.agent ??= []
+  context.painter ??= []
 
   updateStatus(Status.RUNNING)
   messages.push({
@@ -34,9 +37,15 @@ export default defineEventHandler(async (event) => {
   const agent = createAgent({
     apiKey,
     baseURL,
-    model,
-    messages: context,
+    model: agentModel,
+    messages: context.agent,
     pages,
+    painter: {
+      apiKey,
+      baseURL,
+      model: painterModel,
+      messages: context.painter,
+    },
   })
   const stream = createEventStream(event)
   const addAsistant = () => messages.push({
@@ -45,20 +54,26 @@ export default defineEventHandler(async (event) => {
     id: crypto.randomUUID(),
   })
   let divided: boolean = true
+  const send = (chunk: FullAction) => {
+    if (chunk.type === 'text') {
+      if (divided) {
+        addAsistant()
+        divided = false
+      }
+      messages.at(-1)!.content += chunk.options.chunk
+    } else {
+      divided = true
+    }
+    stream.push(JSON.stringify(chunk))
+  }
   event.waitUntil((async () => {
     if (divided) {
       addAsistant()
       divided = false
     }
-    for await (const chunk of agent(input)) {
-      stream.push(JSON.stringify(chunk))
-      if (chunk.type === 'text') {
-        messages.at(-1)!.content += chunk.options.chunk
-      } else {
-        divided = true
-      }
-    }
+    await agent(input, send as AgentChunker)
   })().then(async () => {
+    console.log(context)
     await db.update(chat).set({
       context,
       status: Status.COMPLETED,

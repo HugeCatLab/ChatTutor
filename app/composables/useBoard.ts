@@ -2,7 +2,7 @@ import { createCanvasRenderer } from '@chat-tutor/canvas'
 import type { CanvasPage, CanvasPageAction } from '@chat-tutor/canvas'
 import type { FullAction } from '@chat-tutor/shared'
 import { PageType } from '@chat-tutor/shared'
-import type { PageCreationAction, PageNoteAction } from '@chat-tutor/agent'
+import type { PageCreationAction, PageNoteAction, CanvasPageUpdateAction } from '@chat-tutor/agent'
 import { createMermaidRenderer, type MermaidPage, type MermaidPageAction } from '@chat-tutor/mermaid'
 
 export type Page = CanvasPage | MermaidPage
@@ -84,10 +84,10 @@ export const useBoard = () => {
   const loadPages = (pages: Page[]) => pages.forEach(loadPage)
 
   const handleAction: ActionHandler = (action) => {
-    if (['element'].includes(action.type)) {
+    if (['element', 'update-canvas'].includes(action.type)) {
       handleCanvasAction(action)
     } else if (action.type === 'page') {
-      handlePageCreationAction(action as PageCreationAction)
+      handlePageCreationAction(action as unknown as PageCreationAction)
     } else if (action.type === 'note') {
       handlePageNoteAction(action as PageNoteAction)
     } else if (['set-mermaid'].includes(action.type)) {
@@ -97,13 +97,18 @@ export const useBoard = () => {
 
   const handleCanvasAction: ActionHandler = (action) => {
     const page = currentPages.value.find(p => p.id === action.page)
-    console.log('page', page)
     if (!page) return
-    const renderer = rendererMap.get(page.id!)
-    console.log('renderer', renderer)
-    if (renderer) {
-      console.log('renderer', renderer)
-      ;(<ReturnType<typeof createCanvasRenderer>>renderer).load([action as CanvasPageAction])
+    if (action.type === 'element') {
+      const renderer = rendererMap.get(page.id!)
+      if (renderer) {
+        ; (<ReturnType<typeof createCanvasRenderer>>renderer).load([action as CanvasPageAction])
+      }
+    } else if (action.type === 'update-canvas') {
+      const renderer = rendererMap.get(page.id!)
+      if (renderer) {
+        const { range, domain } = action.options as CanvasPageUpdateAction['options']
+        ; (<ReturnType<typeof createCanvasRenderer>>renderer).setBound(range, domain)
+      }
     }
   }
 
@@ -121,11 +126,13 @@ export const useBoard = () => {
   }
 
   const handleMermaidAction: ActionHandler = (action) => {
-    const page = currentPages.value.find(p => p.id === action.page)
-    if (!page) return
-    const renderer = rendererMap.get(page.id!)
-    if (renderer) {
-      ;(<ReturnType<typeof createMermaidRenderer>>renderer).load([action as MermaidPageAction])
+    if (action.type === 'set-mermaid') {
+      const page = currentPages.value.find(p => p.id === action.page)
+      if (!page) return
+      const renderer = rendererMap.get(page.id!)
+      if (renderer) {
+        ;(<ReturnType<typeof createMermaidRenderer>>renderer).load([action as MermaidPageAction])
+      }
     }
   }
 
