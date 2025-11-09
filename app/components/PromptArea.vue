@@ -19,13 +19,13 @@ defineExpose({
 </script>
 
 <template>
-  <div class="size-full bg-gray-100 p-2 rounded-lg flex flex-col border border-gray-300 shadow-lg">
+  <div class="size-full bg-gray-100 p-2 rounded-lg flex flex-row items-center justify-center md:flex-col border border-gray-300 shadow-lg">
     <textarea
       ref="textareaRef"
       v-model="input"
       class="size-full bg-transparent outline-none resize-none text-gray-500"
     />
-    <div class="flex flex-row w-full h-10">
+    <div class="flex flex-row items-center justify-center md:justify-end w-full h-10">
       <div class="w-full flex flex-row mr-auto justify-end">
         <ButtonContainer class="size-8 justify-center items-center flex">
           <FontAwesomeIcon

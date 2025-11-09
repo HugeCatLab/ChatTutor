@@ -42,7 +42,7 @@ export const useBoard = () => {
     container.id = page.id!
     container.className = 'jxgbox'
     container.style.width = '90%'
-    container.style.height = '500px'
+    container.style.height = '100%'
     container.style.display = 'flex'
     board.value!.appendChild(container)
     const renderer = createCanvasRenderer(container.id, {
@@ -61,7 +61,7 @@ export const useBoard = () => {
     container.id = page.id!
     container.className = 'mermaid'
     container.style.width = '90%'
-    container.style.height = '500px'
+    container.style.height = '100%'
     container.style.display = 'flex'
     container.style.maxHeight = '500px'
     container.style.overflowY = 'auto'
