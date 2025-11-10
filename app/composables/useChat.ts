@@ -4,6 +4,7 @@ import type { FullAction, Action } from '@chat-tutor/shared'
 import type { PageCreationAction, TextChunkAction } from '@chat-tutor/agent'
 import type { CanvasPageAction } from '@chat-tutor/canvas'
 import type { MermaidPageAction } from '@chat-tutor/mermaid'
+import { v4 } from 'uuid'
 
 export type AllAction = FullAction | Action | PageCreationAction | TextChunkAction | CanvasPageAction | MermaidPageAction
 
@@ -27,12 +28,12 @@ export const useChat = (
     messages.value.push({
       type: 'user',
       content: i,
-      id: crypto.randomUUID(),
+      id: v4(),
     })
     const add = () => messages.value.push({
       type: 'assistant',
       content: '',
-      id: crypto.randomUUID(),
+      id: v4(),
     })
     let divided: boolean = true
     

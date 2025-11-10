@@ -42,6 +42,7 @@
     "shiki": "^3.14.0",
     "stream-monaco": "^0.0.2",
     "typescript": "^5.9.3",
+    "uuid": "^13.0.0",
     "vue": "^3.5.22",
     "vue-renderer-markdown": "0.0.61-beta.7",
     "vue-router": "^4.6.3",
