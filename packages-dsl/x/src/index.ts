@@ -1,6 +1,7 @@
 import { parseAnimation } from "@dsl/animation";
-import { Animation, BaseElement, Component } from "@dsl/renderer-core";
-import { AttributeNode, BaseNode, ElementNode, NodeType, parse, ParseOptions, TextNode, ValueNode } from "@dsl/x-parser";
+import type { Animation, BaseElement, Component } from "@dsl/renderer-core";
+import type { AttributeNode, BaseNode, ElementNode, ParseOptions, TextNode, ValueNode } from "@dsl/x-parser";
+import { NodeType, parse } from "@dsl/x-parser";
 import { load } from 'js-yaml'
 
 export function parseXAttribute(attribute: AttributeNode) {

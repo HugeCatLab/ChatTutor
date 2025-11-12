@@ -1,5 +1,4 @@
-export type AttributeValue = string | number | boolean | null | undefined | object | ComputedAttributeValue | AttributeValue[]
-export type ComputedAttributeValue = `{{${string}}}`
+export type AttributeValue = string | number | boolean | null | undefined | object | AttributeValue[]
 export type EventValue = string
 export type StatementValue = string
 

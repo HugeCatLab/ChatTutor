@@ -1,6 +1,6 @@
 import { calculators } from "./calculator"
-import { Context } from "./context"
-import { AttributeValue, ComputedAttributeValue } from "./element"
+import type { Context } from "./context"
+import type { AttributeValue } from "./element"
 
 export function createAdhoc(context: Context) {
   return (src: string, o?: Context) => {
@@ -14,7 +14,7 @@ export function createAdhoc(context: Context) {
 }
 
 export function toProp(key: string, source: AttributeValue, context: Context) {
-  const _computed = (source: ComputedAttributeValue) => {
+  const _computed = (source: string) => {
     try {
       return createAdhoc(context)(source)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -24,7 +24,7 @@ export function toProp(key: string, source: AttributeValue, context: Context) {
   }
   const _string = (source: string) => {
     return key.startsWith(':') || (source.startsWith('[') && source.endsWith(']')) || source.startsWith('{') && source.endsWith('}')
-      ? _computed(source as ComputedAttributeValue)
+      ? _computed(source)
       : source
   }
   const _common = (source: number | boolean | null | undefined) => source
@@ -48,6 +48,6 @@ export function toProp(key: string, source: AttributeValue, context: Context) {
   return typeMap.get(typeof source)?.(source)
 }
 
-export function toProps(attrs: Record<string, AttributeValue>, context: Context) {
-  return Object.fromEntries(Object.entries(attrs).map(([key, value]) => [key.replace(/^:/, ''), toProp(key, value, context)]))
+export function toProps<T extends Record<string, unknown> = Record<string, unknown>>(attrs: Record<string, AttributeValue>, context: Context): T & { [key: string]: unknown } {
+  return Object.fromEntries(Object.entries(attrs).map(([key, value]) => [key.replace(/^:/, ''), toProp(key, value, context)])) as T & { [key: string]: unknown }
 }

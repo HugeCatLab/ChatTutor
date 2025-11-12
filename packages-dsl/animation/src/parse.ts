@@ -8,7 +8,7 @@
  * - params: optional, list of parameters
  */
 
-import { Animation } from "@dsl/renderer-core"
+import type { Animation } from "@dsl/renderer-core"
 
 const EASING_MATCH_REG = /{([^}]+)}/
 const DURATION_AND_DELAY_MATCH_REG = /<([^>]+)>/

@@ -1,4 +1,4 @@
-import { BaseElement } from "./element"
+import type { BaseElement } from "./element"
 
 export interface RendererError<T extends string> {
   name: T

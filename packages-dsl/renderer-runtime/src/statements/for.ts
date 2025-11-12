@@ -1,4 +1,5 @@
-import { BaseElement, Context, createAdhoc, defineStatement, effect, mergeContext, reactive, ref, registerStatement } from "@dsl/renderer-core";
+import type { BaseElement, Context} from "@dsl/renderer-core";
+import { createAdhoc, defineStatement, effect, mergeContext, reactive, ref, registerStatement } from "@dsl/renderer-core";
 import { toArray } from "../renderer";
 import morph from 'morphdom'
 

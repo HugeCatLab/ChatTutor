@@ -1,4 +1,5 @@
-import { Animation, AnimationPreset, AnimationPresetContext, AnimationPresetGenerator, createAdhoc, Easing, getAnimationPreset, RawContext, toProp } from "@dsl/renderer-core"
+import type { Animation, AnimationPreset, AnimationPresetContext, AnimationPresetGenerator, Easing, RawContext} from "@dsl/renderer-core";
+import { createAdhoc, getAnimationPreset, toProp } from "@dsl/renderer-core"
 import { variableAnimation } from "./variable"
 import { runRaf } from "./raf"
 

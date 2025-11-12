@@ -1,4 +1,4 @@
-import { createAdhoc, defineStatement, effect, registerStatement, ref, type Ref, BaseElement } from "@dsl/renderer-core"
+import { createAdhoc, defineStatement, effect, registerStatement, ref, type Ref, type BaseElement  } from "@dsl/renderer-core";
 import { createDelegate } from "../delegate"
 
 // 条件块状态管理

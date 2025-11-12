@@ -1,5 +1,5 @@
 import type { RawContext } from "./context"
-import { RendererError } from "./error"
+import type { RendererError } from "./error"
 
 export type PrefabParseType = 'node' | 'raw'
 export type RegisterablePrefab = Prefab<string, RawContext, RawContext> | AsyncPrefab<string, RawContext, RawContext>

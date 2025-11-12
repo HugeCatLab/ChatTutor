@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Context } from "./context";
+import type { Context } from "./context";
 
 export type Calculator<Ctx extends Context> = (context: Ctx) => (...args: any[]) => any
 export type CalculatorResult<Cacl extends Calculator<Context>> = ReturnType<ReturnType<Cacl>>

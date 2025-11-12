@@ -54,9 +54,9 @@ onMounted(() => {
       </ButtonContainer>
       <div class="flex h-full flex-col py-5 gap-10">
         <ButtonContainer
+          v-show="width! > 768 || collapsed"
           class="flex flex-row w-full items-center justify-center gap-5 cursor-pointer select-none"
           @click="navigateTo('/')"
-          v-show="width! > 768 || collapsed"
         >
           <FontAwesomeIcon :icon="faAdd" />
           <Transition name="fade">

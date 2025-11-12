@@ -1,5 +1,5 @@
-import { CalculatorKnowledge } from './calculator'
-import { PrefabKnowledge } from './prefab'
+import type { CalculatorKnowledge } from './calculator'
+import type { PrefabKnowledge } from './prefab'
 
 export interface Knowledge {
   prefabs: PrefabKnowledge[]

@@ -13,10 +13,15 @@ defineProps<{
 </script>
 
 <template>
-  <div class="text-gray-600 px-2 markdown flex flex-col"
-    :class="{ 'border border-rounded-lg': border, [classes]: true }">
+  <div
+    class="text-gray-600 px-2 markdown flex flex-col"
+    :class="{ 'border border-rounded-lg': border, [classes]: true }"
+  >
     <div class="flex flex-row items-center gap-2">
-      <div v-if="running" class="size-4 flex justify-center items-center animate-spin">
+      <div
+        v-if="running"
+        class="size-4 flex justify-center items-center animate-spin"
+      >
         <FontAwesomeIcon :icon="faSpinner" />
       </div>
       <ClientOnly>
@@ -24,8 +29,15 @@ defineProps<{
       </ClientOnly>
     </div>
     <div class="flex flex-row w-full">
-      <div v-for="image in images" :key="image">
-        <img :src="image" alt="Image" class="w-20 h-20 rounded-lg object-cover">
+      <div
+        v-for="image in images"
+        :key="image"
+      >
+        <img
+          :src="image"
+          alt="Image"
+          class="w-20 h-20 rounded-lg object-cover"
+        >
       </div>
     </div>
   </div>

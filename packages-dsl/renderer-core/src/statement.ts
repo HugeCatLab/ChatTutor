@@ -1,5 +1,5 @@
-import { Context } from "./context"
-import { BaseElement } from "./element"
+import type { Context } from "./context"
+import type { BaseElement } from "./element"
 
 export type StatementPostGenerator = (
   context: Context,

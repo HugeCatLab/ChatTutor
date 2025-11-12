@@ -1,5 +1,6 @@
-import { Component, createContext, BaseElement, createAdhoc, effect, mergeContext, toProps, reactive, getRootSpace, ref, createErrorContainer, getStatement, StatementPreGenerator, StatementPostGenerator, Attributes, Origin, PrefabGeneratorContext, PrefabDefinition, RawContext, PrefabParseType } from "@dsl/renderer-core"
-import { ElementNotFoundError } from "./error"
+import type { Component, BaseElement, StatementPreGenerator, StatementPostGenerator, PrefabGeneratorContext, PrefabDefinition, RawContext, PrefabParseType } from "@dsl/renderer-core";
+import { createContext, createAdhoc, effect, mergeContext, toProps, reactive, getRootSpace, ref, createErrorContainer, getStatement, Attributes, Origin } from "@dsl/renderer-core"
+import type { ElementNotFoundError } from "./error"
 import { createDelegate } from "./delegate"
 import { createMarkdown } from "./builtins/markdown"
 import patch from 'morphdom'
@@ -11,9 +12,9 @@ export const toArray = <T>(value: T | T[]): T[] => Array.isArray(value) ? value 
 export function createRenderer() {
   const { getActiveContext, setActiveContext, clearActiveContext, withContext, setValue, getValue } = createContext(reactive({}))
   const errors = createErrorContainer()
-  const beginAnimations: (() => void)[] = []
   const { parse } = createParser({ space: getRootSpace() })
   const markdown = createMarkdown()
+  const indexQueue = new Map<number, (() => void)[]>()
 
   const mountQueue: (() => void)[] = []
   const onMount = (callback: () => void) => {
@@ -39,7 +40,7 @@ export function createRenderer() {
     return names as [string, ...string[]]
   }
 
-  const preprocessElement = (elements: (BaseElement<string> | string)[], parent?: BaseElement<string>) => {
+  const preprocessElement = (elements: (BaseElement<string> | string)[]) => {
     // Merge consecutive string children with newline separators
     const mergedChildren: (BaseElement<string> | string)[] = []
     let currentStringGroup: string[] = []
@@ -55,7 +56,7 @@ export function createRenderer() {
         }
         // Process non-string child recursively
         if (typeof child === 'object' && child !== null && 'children' in child) {
-          child.children = preprocessElement(child.children ?? [], child)
+          child.children = preprocessElement(child.children ?? [])
         }
         mergedChildren.push(child)
       }
@@ -225,28 +226,41 @@ export function createRenderer() {
 
     element.attrs ??= {}
 
-    const props = toProps(element.attrs, getActiveContext())
-    setValue(Attributes, props)
-    setValue(Origin, element)
+    const props = toProps<{ index?: number | string }>(element.attrs, getActiveContext())
+    const resolve = () => {
+      setValue(Attributes, props)
+      setValue(Origin, element)
 
-
-    const maybePromise = pfb.prefab(getActiveContext(), errors.addError)
-    if (maybePromise instanceof Promise) {
-      const fragment = document.createElement('div')
-      onMount(() => {
-        maybePromise.then((definition) => {
-          const parent = fragment.parentElement
-          const nodes = toArray(renderPrefab(element, props, definition))
-          for (const node of nodes) {
-            if (!node || !parent) continue
-            parent.insertBefore(node, parent.firstChild)
-          }
+      const maybePromise = pfb.prefab(getActiveContext(), errors.addError)
+      if (maybePromise instanceof Promise) {
+        const fragment = document.createElement('div')
+        onMount(() => {
+          maybePromise.then((definition) => {
+            const parent = fragment.parentElement
+            const nodes = toArray(renderPrefab(element, props, definition))
+            for (const node of nodes) {
+              if (!node || !parent) continue
+              parent.insertBefore(node, parent.firstChild)
+            }
+          })
         })
-      })
-      return fragment
+        return fragment
+      }
+      return renderPrefab(element, props, maybePromise, pfb.type)
     }
-    return renderPrefab(element, props, maybePromise, pfb.type)
-
+    if (!props.index) return resolve()
+    const fragment = document.createElement('div')
+    const index = Number(props.index)
+    const l = indexQueue.get(index) ?? []
+    l.push(() => {
+      const nodes = toArray(resolve())
+      for (const node of nodes) {
+        if (!node || !fragment.parentElement) continue
+        fragment.parentElement.insertBefore(node, fragment.parentElement.firstChild)
+      }
+    })
+    indexQueue.set(index, l)
+    return fragment
   }
 
   const renderValue = (source: string) => {
@@ -317,6 +331,14 @@ export function createRenderer() {
     mount()
   }
 
+  const indexRender = (index: number) => {
+    const l = indexQueue.get(index) ?? []
+    for (const callback of l) {
+      callback()
+    }
+    indexQueue.delete(index)
+  }
+
   return {
     ...errors,
     render,
@@ -326,13 +348,13 @@ export function createRenderer() {
     renderNode,
     renderText,
     renderValue,
+    indexRender,
     addComponents,
     getActiveContext,
     setActiveContext,
     clearActiveContext,
     setValue,
     getValue,
-    beginAnimations,
     onMount,
     mount,
   }

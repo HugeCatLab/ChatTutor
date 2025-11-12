@@ -1,4 +1,4 @@
-import { PrefabKnowledge } from "../prefab";
+import type { PrefabKnowledge } from "../prefab";
 
 export const prefabritize = (prefab: PrefabKnowledge) => {
   const header = `

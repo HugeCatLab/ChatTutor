@@ -1,4 +1,4 @@
-import { CalculatorKnowledge, type Knowledge, type PrefabKnowledge } from ".";
+import type { CalculatorKnowledge, type Knowledge, type PrefabKnowledge } from ".";
 
 export const knowledge: Knowledge = {
   prefabs: [],

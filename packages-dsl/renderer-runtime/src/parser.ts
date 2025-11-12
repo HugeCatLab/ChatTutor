@@ -1,5 +1,6 @@
-import { PrefabNamespace } from "@dsl/renderer-core";
-import { ModeResolver, parseComponent, TextMode } from "@dsl/x";
+import type { PrefabNamespace } from "@dsl/renderer-core";
+import type { ModeResolver} from "@dsl/x";
+import { parseComponent, TextMode } from "@dsl/x";
 
 export interface ParserOptions {
   space: PrefabNamespace

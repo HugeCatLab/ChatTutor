@@ -1,4 +1,4 @@
-import { BaseElement } from "./element"
+import type { BaseElement } from "./element"
 
 type MaybeArray<T> = T | T[]
 export type Component<T extends string> = {
