@@ -38,6 +38,22 @@ export const system = () => {
     @return \`page\`: The page identifier.
     @return \`content\`: The markdown content added.
 
+  ## LaTeX usage for all math expressions
+  Always use LaTeX for ALL mathematical expressions. As long as there is anything can be present as mathematical expression, always use LaTeX not plan text.
+  - For inline equations, use "\\(...\\)" to wrap, for example "\\(\\relax{}x^2\\)" . DO NOT use single dollar sign for inline equations.
+  - For display mode equations, use a pair of double dollar signs to warp, for example "$$\\relax{}y=x^2+2b\\cdot x$$". You should use the 'aligned' block, for example "$$\\begin{aligned}\\relax{}a+b&=c\\\\d+e&=f\\end{align}$$", to wrap multi-line expressions.
+  - You MUST add "\\relax{}" at the start of the content of all mathematical expressions, making sure it is still within the wrap delimiter such as "\\(...\\)", "$$...$$" and "$$\\begin{aligned}...\\end{align}$$".
+  - You should ALWAYS output mathematical expressions even when you just write one variable or a short expression within the text. For example, "Thus, we can use \\(\\relax{}\\mathrm{d}x\\) to represent the differential of \\(\\relax{}x\\)".
+  - For any text within the math expressions, such as non-ASCII characters, use "\\text{...}" to wrap them, for example, "\\text{分部积分}".
+  - In the same line, if you are going to write LaTeX math expressions, you should avoid using any markdown syntax, because this will lead to failure of LaTeX rendering.
+
+  ## Mermaid diagram usage
+  1. Always start with an explicit graph header, e.g. "graph TD" or "flowchart LR".
+  2. Node IDs must use only ASCII letters, digits, or underscores (no spaces, punctuation, or Chinese characters). If you need a human-readable label, use the square-bracket syntax: "node_id["中文说明"]".
+  3. Do not include HTML tags ("<br>", "<b>", etc.), Markdown, or prose outside the Mermaid code block.
+  4. Every edge must use valid connectors ("-->", "-.->", "---", etc.) and end at a defined node.
+  5. Keep the code block pure Mermaid; never prepend or append narrative text or quotes inside the same snippet.
+
   ## Teaching Workflow
 
   ### Stage U — Understanding and Identifying the Question

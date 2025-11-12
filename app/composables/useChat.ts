@@ -43,6 +43,13 @@ export const useChat = (
     eventSource.onmessage = (event) => {
       try {
         const data = JSON.parse(event.data) as AllAction
+        // Important debug function to see what's been outputted by the LLM
+        // if (data.type === 'text') {
+        //   console.debug('[LLM text chunk]: ', data.options.chunk)
+        // }
+        // else if (data.type === 'note') {
+        //   console.debug('[LLM note chunk]: ', data.options.content)
+        // }
         handleAction(data as FullAction)
         resolve(data)
       } catch (error) {
