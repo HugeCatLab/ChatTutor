@@ -9,7 +9,7 @@ export default withNuxt([
   ...vue.configs["flat/recommended"],
   { ignores: ["**/node_modules/**", "**/dist/**"] },
   {
-    files: ["{app,packages,packages-dsl,server,shared}/**/*.{js,jsx,ts,tsx}"],
+    files: ["{app,packages,packages-dsl,libs,server,shared}/**/*.{js,jsx,ts,tsx}"],
     languageOptions: {
       parserOptions: {
         ecmaVersion: 2022,

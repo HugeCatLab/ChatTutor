@@ -1,0 +1,3 @@
+{
+  "extends": "../../packages-dsl/tsconfig.base.json",
+}

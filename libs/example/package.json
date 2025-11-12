@@ -1,0 +1,11 @@
+{
+  "name": "@dsl/example",
+  "version": "0.0.0",
+  "main": "index.js",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+  },
+  "packageManager": "pnpm@10.8.1"
+}
