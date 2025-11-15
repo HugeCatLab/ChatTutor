@@ -20,6 +20,8 @@ export const useChat = (
   const id = params.id as string
   let eventSource: EventSource | null = null
 
+  const { baseURL, apiKey, agentModel, painterModel } = useSettings()
+
   const send = async () => {
     running.value = true
     const i = input.value
@@ -37,19 +39,21 @@ export const useChat = (
       images,
       id: v4(),
     })
+
+    const query = {
+      input: i,
+      images: images.join(','),
+      apiKey: apiKey.value,
+      baseURL: baseURL.value,
+      agentModel: agentModel.value,
+      painterModel: painterModel.value,
+    }
     
-    eventSource = new EventSource(`/api/chat/${id}?input=${i}&images=${images.join(',')}`)
+    eventSource = new EventSource(`/api/chat/${id}?${new URLSearchParams(query).toString()}`)
     
     eventSource.onmessage = (event) => {
       try {
         const data = JSON.parse(event.data) as AllAction
-        // Important debug function to see what's been outputted by the LLM
-        // if (data.type === 'text') {
-        //   console.debug('[LLM text chunk]: ', data.options.chunk)
-        // }
-        // else if (data.type === 'note') {
-        //   console.debug('[LLM note chunk]: ', data.options.content)
-        // }
         handleAction(data as FullAction)
         resolve(data)
       } catch (error) {

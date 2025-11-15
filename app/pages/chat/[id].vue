@@ -31,7 +31,6 @@ if (initialInput || initialImages) {
   }
   const { input: _, images: __, ...restQuery } = route.query
   navigateTo({ query: restQuery }, { replace: true })
-  handleSend()
 }
 
 const id = useRoute().params.id as string
@@ -46,7 +45,7 @@ void (async () => {
 })()
 
 onMounted(() => {
-  console.log(board.value)
+  handleSend()
 })
 </script>
 
