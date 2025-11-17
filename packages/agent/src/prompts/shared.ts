@@ -3,117 +3,133 @@ export const highlights = ['primary', 'key', 'support', 'creative', 'caution', '
 export const fonts = ['primary', 'comic', 'code', 'math']
 export const sizes = ['6xs', '5xs', '4xs', '3xs', '2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl', '5xl', '6xl']
 
-export function concepts() {
+export function reactivity() {
   return `
-  ### Concepts
-  - STEP: A step is a unit to teach, a STEP should bind at least one COMPONENT, multiple COMPONENTs will be rendered in a column.
-    + conditional: Whether the step is conditional. If this step is conditional, then the following steps will not be automatically displayed unless next() is triggered.
-  - ELEMENT: A node in the xml tree.
-  - PREFAB: Built-in components to render specific figures.
-  - REF: A reflect variable, which could be used on ELEMENT. When the value of a REF is changed, the ELEMENT will be updated.
-  - CALCULATOR: calculator is a function chould used directly in expression.
-  - COMPONENT: A group of ELEMENTs, which could be defined by yourself and used as a PREFAB.
-    + name: The name of the component.
-    + props: The props of the component.
-    + refs: The ref variables of the component, could be used on ELEMENT.
-  `.trim().replaceAll('$', '`')
+  You should use reactivity to control the behavior of the element.
+
+  **Ref**
+  A ref is a reactive variable that can be used to store a value.
+  - If you use a ref on an element, the element will be updated when the value of the ref is changed.
+  `.trim()
 }
 
 export function attributes() {
   return `
-  ### Attributes
-
   ELEMENT has several attributes to control its behavior with different ATTRIBUTE_PREFIX.
-  - $attr="value"$: A static string attribute, value will be parsed as a raw string.
-    + e.g. $attr="Hello, World!"$ will be parsed as $"Hello, World!"$.
-  - $:attr="expression"$: A expression attribute, which should be a valid JavaScript expression.
-    + e.g. $:attr="1 + 1"$ will be parsed as $2$.
-  - $@attr="event"$: A event attribute, which should be a valid JavaScript event handler.
-    + e.g. $@click="console.log('click')"$ will be parsed as $console.log('click')$.
+  - \`attr="value"\`: A static string attribute, value will be parsed as a raw string.
+    + e.g. \`attr="Hello, World!"\` will be parsed as "Hello, World!".
+  - \`:attr="expression"\`: A expression attribute, which should be a valid JavaScript expression.
+    + e.g. \`:attr="1 + 1"\` will be parsed as 2.
+  - \`@attr="event"\`: A event attribute, which should be a valid JavaScript event handler.
+    + e.g. \`@click="console.log('click')"\` will be parsed as console.log('click').
     + Events should be a standard DOM event name.
-  - $#attr="statement"$: A statement attribute.
-    + e.g. $#if="x > 3"$
-  `.trim().replaceAll('$', '`')
+  - \`#attr="statement"\`: A statement attribute.
+    + e.g. \`#if="x > 3"\`
+  `.trim()
 }
 
 export function valueInsertion() {
   return `
-  ### Value Insertion
-
-  You can use $\{{ expression }}$ to insert the value of an expression into a TEXT-NODE.
-  $$$
+  You can use \`{{ expression }}\` to insert the value of an expression into a TEXT-NODE.
+  \`\`\`
   <element>
-    Hello, {{ name }}!
+    Hello, \`{{ name }}\`!
   </element>
-  $$$
-  `.trim().replaceAll('$', '`')
+  \`\`\`
+  `.trim()
 }
 
 export function statements() {
-  return `
-  ### Statements
-  - $#if$, $#else$, $#elif$: Conditional statements.
-  $$$
-  <element #if="x > 3">
-    <child1/>
-  </element>
-  <element #else>
-    <child2/>
-  </element>
-  $$$
-
-  - $#for$: Loop statements.
-  $$$
-  <element #for="item in 10">
-    {{ item }}
-  </element>
-  $$$
-  element will be rendered 10 times with the value of $item$ is $0$, $1$, $2$, ..., $9$.
-
-  - $#slot$: Slot statements.
-  $$$
-  <element>
-    <block #slot="default">
-      <child/>
-    </block>
-  </element>
-  $$$
-  In some PREFABs, you can use $#slot$ to define a slot, and PREFAB will render defferent content in different positions.
-  **⚠️ The ELEMENT where the $#slot$ is located MUST be a valid PREFAB element (like \`<block>\`), NOT HTML tags (like \`<div>\`).**
-  `.trim().replaceAll('$', '`')
+  return {
+    if: `
+    - \`#if="expression"\`: Conditional statements.
+    \`\`\`
+    <element #if="x > 3">
+      <child1/>
+    </element>
+    \`\`\`
+    `,
+    else: `
+    - \`#else\`: Else statements.
+    \`\`\`
+    <element #else>
+      <child2/>
+    </element>
+    \`\`\`
+    `,
+    elif: `
+    - \`#elif="expression"\`: Elif statements.
+    \`\`\`
+    <element #elif="x > 3">
+      <child3/>
+    </element>
+    \`\`\`
+    `,
+    for: `
+    - \`#for="expression"\`: Loop statements.
+    \`\`\`
+    <element #for="item in 10">
+      {{ item }}
+    </element>
+    \`\`\`
+    `,
+    slot: `
+    - \`#slot="name"\`: Slot statements.
+    \`\`\`
+    <element>
+      <block #slot="default">
+        <child/>
+      </block>
+    </element>
+    \`\`\`
+    `,
+  }
 }
 
 export function animation() {
   return `
-  ### Animation
-
-  #### Syntax
-  $\{easing}name<duration, delay>(...params)$
-  - easing: optional, default to $(progress) => progress$.
+  **Syntax**
+  \`{easing}name<duration, delay>(...params)\`
+  - easing: optional, default to \`(progress) => progress\`.
   - name: required, the name of the animation.
   - duration: required, in seconds.
   - delay: optional, in seconds.
   - params: optional, list of parameters.
 
-  #### Variable Animation
+  **Variable Animation**
   Use a reactive variable as the name of the animation
-  - $x<1>(100)$: $x$ will be animated from itself to 100 in 1 second.
-  - $x<1, 0.5>(10, 100)$: $x$ will be animated from 10 to 100 in 1 second with a delay of 0.5 seconds.
-  - $\{(x) => x * x}<1>(100)$: $x$ will be animated from itself to 100 in 1 second with easing function $(x) => x * x$.
+  - \`x<1>(100)\`: \`x\` will be animated from itself to 100 in 1 second.
+  - \`x<1, 0.5>(10, 100)\`: \`x\` will be animated from 10 to 100 in 1 second with a delay of 0.5 seconds.
+  - \`{(x) => x * x}<1>(100)\`: \`x\` will be animated from itself to 100 in 1 second with easing function \`(x) => x * x\`.
 
-  #### Animation Group
+  **Animation Group**
   - An animation should be defined in a component as a group so that you can call them.
   - An animation group could have one or more animations.
   - Animations in a group will be called in order.
 
-  #### Call Animation
-  use $animate('animation_group_name')$ to call an animation group.
-  - support multiple animations: $animate('animation_group_name1', 'animation_group_name2')$
-  - support parallel animations: $animate('animation_group_name1', ['animation_group_name2', 'animation_group_name3'])$
+  **Call Animation**
+  use \`animate('animation_group_name')\` to call an animation group.
+  - support multiple animations: \`animate('animation_group_name1', 'animation_group_name2')\`
+  - support parallel animations: \`animate('animation_group_name1', ['animation_group_name2', 'animation_group_name3'])\`
     + animation_group_name2 and animation_group_name3 will be called in parallel.
-  `.trim().replaceAll('$', '`')
+  `.trim()
 }
 
+export const output = () => {
+  return `
+  You should output the result in the following format:
+  \`\`\`document
+  ---
+  refs:
+    <name>: '<expression>'
+  ---
+  <element/>
+  \`\`\`
+
+  - Document information is write in a yaml header
+  - element should be a valid DSL element
+  `.trim()
+}
 
 export const dslSyntax = () => {
   return `

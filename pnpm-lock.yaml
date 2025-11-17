@@ -316,6 +316,12 @@ importers:
       '@chat-tutor/shared':
         specifier: workspace:*
         version: link:../shared
+      '@dsl/knowledge':
+        specifier: workspace:*
+        version: link:../../packages-dsl/knowledge
+      '@dsl/math':
+        specifier: workspace:*
+        version: link:../../libs/math
       '@types/node':
         specifier: ^24.10.0
         version: 24.10.0

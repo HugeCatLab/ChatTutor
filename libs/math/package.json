@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "main": "index.js",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./docs": "./src/docs/index.ts"
   },
   "dependencies": {
     "@dsl/renderer-core": "workspace:*",
