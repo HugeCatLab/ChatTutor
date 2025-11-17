@@ -286,13 +286,64 @@ export function createRenderer() {
     mountQueue.length = 0
   }
 
+  const safeMount = (container: HTMLElement) => {
+    let mounted = false
+    let resizeObserver: ResizeObserver | null = null
+
+    const doMount = () => {
+      if (mounted) return
+      mounted = true
+      if (resizeObserver) {
+        resizeObserver.disconnect()
+        resizeObserver = null
+      }
+      mount()
+    }
+
+    const checkAndMount = () => {
+      const rect = container.getBoundingClientRect()
+      // Check if container has valid dimensions
+      if (rect.width > 0 && rect.height > 0) {
+        doMount()
+        return true
+      }
+      return false
+    }
+
+    // Try immediate mount first (for reload cases where layout is already calculated)
+    if (checkAndMount()) {
+      return
+    }
+
+    // For real-time rendering, use ResizeObserver to wait for valid dimensions
+    resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const { width, height } = entry.contentRect
+        if (width > 0 && height > 0) {
+          doMount()
+          break
+        }
+      }
+    })
+
+    resizeObserver.observe(container)
+
+    // Fallback: if ResizeObserver doesn't fire within reasonable time, try mount anyway
+    setTimeout(() => {
+      if (!mounted && resizeObserver) {
+        doMount()
+      }
+    }, 1000)
+  }
+
   const render = (document: string, element?: HTMLElement) => {
     const parsed = parse(document)
     if (!parsed) return
     const nodes = toArray(renderRootDocument(parsed))
     if (element) {
+      element.childNodes.forEach(child => child.remove())
       element.append(...nodes.filter(node => node !== null && node !== undefined))
-      mount()
+      safeMount(element)
     }
     return [mount, indexRender] as [
       () => void,

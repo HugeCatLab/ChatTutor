@@ -49,6 +49,7 @@ const _render = () => {
 }
 
 watch(template, _render)
+console.log(_render)
 
 onMounted(() => {
   _render()
@@ -78,7 +79,7 @@ onMounted(() => {
     <div class="container-common w-3/4 overflow-y-auto p-0">
       <div
         ref="container"
-        class="w-full preview"
+        class="w-full h-100 preview flex items-center justify-center"
       />
     </div>
   </div>

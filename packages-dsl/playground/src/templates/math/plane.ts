@@ -5,7 +5,7 @@ export const plane: Template = {
   content: `
   ---
   ---
-  <plane range="[-10, 10]" domain="[-10, 10]">
+  <plane range="[-15, 10]" domain="[-10, 10]">
     <dot x="4" y="3" label="x^2 + y^2 = 25" color="info"/>
   </plane>
   `.trim(),
