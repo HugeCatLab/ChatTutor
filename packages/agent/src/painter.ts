@@ -2,11 +2,10 @@ import type { CanvasPage } from '@chat-tutor/canvas'
 import type { AgentChunker, BaseAgentOptions } from './types'
 import { message, streamText, type StreamTextEvent } from 'xsai'
 import { painter } from './prompts'
-import { getPainterTools } from './tools/painter'
 import type { ReadableStream } from 'node:stream/web'
 
 export interface PainterAgentOptions extends BaseAgentOptions {
-  page: CanvasPage
+  // page: CanvasPage
 }
 
 export const createPainterAgent = (options: PainterAgentOptions) => {
@@ -20,27 +19,17 @@ export const createPainterAgent = (options: PainterAgentOptions) => {
     input: string,
     chunker: AgentChunker
   ): Promise<string> => {
-    const tools = await getPainterTools(options.page, chunker)
     options.messages.push(message.user(input))
     const { fullStream, messages } = streamText({
       model: options.model,
       apiKey: options.apiKey,
       baseURL: options.baseURL,
       messages: options.messages,
-      tools,
       maxSteps: 4,
     })
-    messages.then(ms => {
-      options.messages.length = 0
-      options.messages.push(...ms)
-    })
-    for await (const _ of <ReadableStream<StreamTextEvent>>fullStream) {
-      // TODO: handle tool calls
-    }
-    const lastMessage = options.messages.at(-1)
-    if (lastMessage && lastMessage.role === 'assistant') {
-      return lastMessage.content as string
-    }
-    return ''
+    const msgs = await messages
+    options.messages.length = 0
+    options.messages.push(...msgs)
+    return msgs[msgs.length - 1].content as string
   }
 }
