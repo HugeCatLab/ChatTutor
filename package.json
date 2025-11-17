@@ -11,7 +11,8 @@
     "db:generate": "drizzle-kit generate",
     "db:push": "drizzle-kit push",
     "db:migrate": "drizzle-kit migrate",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio",
+    "test": "vitest"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.927.0",
@@ -54,6 +55,7 @@
     "eslint-plugin-vue": "^10.5.1",
     "typescript-eslint": "^8.46.3",
     "unocss": "^66.5.4",
+    "vitest": "^4.0.9",
     "vue-eslint-parser": "^10.2.0"
   },
   "packageManager": "pnpm@10.8.1",

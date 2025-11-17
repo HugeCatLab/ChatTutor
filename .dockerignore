@@ -1,0 +1,73 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Build outputs
+.output
+.nuxt
+dist
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Editor directories and files
+.vscode
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# CI/CD
+.github
+.gitlab-ci.yml
+
+# Testing
+coverage
+*.test.ts
+*.spec.ts
+__tests__
+test
+tests
+
+# Documentation
+README.md
+README_CN.md
+LICENSE
+*.md
+
+# Development files
+.editorconfig
+.prettierrc
+.eslintrc*
+eslint.config.mjs
+vitest.config.ts
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Misc
+.cache
+.temp
+.tmp
+

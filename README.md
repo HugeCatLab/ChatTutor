@@ -24,6 +24,10 @@
 
 ---
 
+> [!NOTE]
+>
+> Online Website: ChatTutor is available at [https://chattutor.app](https://chattutor.app), please set your own API key and models in the settings. ([https://chattutor.app/settings](https://chattutor.app/settings))
+
 ChatTutor is an AI teacher equipped with the ability to use an electronic whiteboard.
 
 Traditional chatbots interact with users primarily through text, which is sufficient in most scenarios. However, with the development of LLM in recent years, more and more people are using AI to assist their learning. In a real-world classroom, teachers have many teaching tools—chalk, computers, blackboards, and other teaching aids—that help students better understand knowledge. But for a chatbot, text can convey very limited information, especially in STEM subjects.
@@ -49,8 +53,7 @@ Please refer to our [Roadmap v0.1](https://github.com/sheepbox8646/ChatTutor/iss
 ### Environment
 
 - Node.js >= 20
-- Postgres
-- PNPM
+- Docker
 
 ### Environment Variables
 
@@ -80,17 +83,12 @@ Fill your config in `.env` file.
 - `OSS_BUCKET`: The OSS bucket to use.
 - `OSS_REGION`: The OSS region to use. (optional)
 
-### Initialize
-
-```bash
-pnpm i
-pnpm db:push # Init
-```
-
 ### Run
 
 ```bash
-pnpm dev
+git clone https://github.com/sheepbox8646/ChatTutor.git
+cd ChatTutor
+docker compose up -d
 ```
 
 ## Projects Used on Core Features

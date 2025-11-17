@@ -20,6 +20,8 @@ export const useChat = (
   const id = params.id as string
   let eventSource: EventSource | null = null
 
+  const { baseURL, apiKey, agentModel, painterModel } = useSettings()
+
   const send = async () => {
     running.value = true
     const i = input.value
@@ -37,8 +39,17 @@ export const useChat = (
       images,
       id: v4(),
     })
+
+    const query = {
+      input: i,
+      images: images.join(','),
+      apiKey: apiKey.value,
+      baseURL: baseURL.value,
+      agentModel: agentModel.value,
+      painterModel: painterModel.value,
+    }
     
-    eventSource = new EventSource(`/api/chat/${id}?input=${i}&images=${images.join(',')}`)
+    eventSource = new EventSource(`/api/chat/${id}?${new URLSearchParams(query).toString()}`)
     
     eventSource.onmessage = (event) => {
       try {

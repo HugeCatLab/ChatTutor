@@ -5,6 +5,7 @@ import { eq } from 'drizzle-orm'
 import type { FullAction, Page } from '@chat-tutor/shared'
 import type { Message as DisplayMessage, Context, AllAction } from '#shared/types'
 import { createMessageResolver } from '#shared/types/message'
+import { resolveValue } from '#shared/utils/value'
 
 async function imageUrlToBase64(url: string): Promise<string> {
   try {
@@ -27,11 +28,19 @@ async function imageUrlToBase64(url: string): Promise<string> {
 }
 
 export default defineEventHandler(async (event) => {
-  const apiKey = process.env.API_KEY!
-  const baseURL = process.env.BASE_URL!
-  const agentModel = process.env.AGENT_MODEL!
-  const painterModel = process.env.PAINTER_MODEL ?? agentModel
-  const { input, images: imagesString } = getQuery(event) as { input: string, images: string }
+  const query = getQuery(event) as {
+    input: string,
+    images: string,
+    apiKey?: string,
+    baseURL?: string,
+    agentModel?: string,
+    painterModel?: string,
+  }
+  const { input, images: imagesString } = query
+  const apiKey = resolveValue(query.apiKey, process.env.API_KEY!)
+  const baseURL = resolveValue(query.baseURL, process.env.BASE_URL!)
+  const agentModel = resolveValue(query.agentModel, process.env.AGENT_MODEL!)
+  const painterModel = resolveValue(query.painterModel, resolveValue(query.agentModel, process.env.PAINTER_MODEL!))
   const isDev = process.env.NODE_ENV === 'development'
 
   let images = imagesString ? imagesString.split(',').filter(Boolean) : []
