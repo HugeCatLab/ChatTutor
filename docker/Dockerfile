@@ -81,7 +81,8 @@ COPY --from=builder --chown=nuxtjs:nodejs /app/libs /app/libs
 
 # Copy entrypoint script
 COPY docker/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh && \
+RUN sed -i 's/\r$//' /usr/local/bin/docker-entrypoint.sh && \
+    chmod +x /usr/local/bin/docker-entrypoint.sh && \
     chown nuxtjs:nodejs /usr/local/bin/docker-entrypoint.sh
 
 # Switch to non-root user
