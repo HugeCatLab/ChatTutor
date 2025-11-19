@@ -5,6 +5,7 @@ import type { Action, FullAction, Page } from '@chat-tutor/shared'
 import type { ReadableStream } from 'node:stream/web'
 import type { AgentChunker, BaseAgentOptions } from './types'
 import { createBlockParser } from '../utils/blockParser'
+import { createBlockParser } from '../utils/blockParser'
 
 export type TextChunkAction = Action<{ chunk: string }, 'text'>
 export type PageCreationAction<T extends Page = Page> = Action<T, 'page'>
@@ -71,6 +72,11 @@ export const createAgent = (options: AgentOptions) => {
       options.messages.push(...ms)
     })
     for await (const chunk of <ReadableStream<string>>textStream) {
+      // chunker({
+      //   type: 'text',
+      //   options: { chunk },
+      // } as TextChunkAction)
+      parser.handle({
       // chunker({
       //   type: 'text',
       //   options: { chunk },
