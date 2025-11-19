@@ -125,68 +125,67 @@ export const getAgentTools = async (
     },
   })
 
-  const createMermaid = tool({
-    name: 'create_mermaid',
-    description: 'Create a new mermaid page',
-    parameters: type({
-      id: 'string',
-      title: 'string',
-    }),
-    execute: async ({ id, title }) => {
-      const result = checkExist(id)
-      if (result) {
-        return result
-      }
-      const p: MermaidPage = {
-        id,
-        title,
-        type: PageType.MERMAID,
-        steps: [],
-        notes: [],
-        forms: [],
-      }
-      pages.push(p)
-      chunker({
-        type: 'page',
-        options: p,
-      } as PageCreationAction<MermaidPage>)
-      return {
-        success: true,
-        message: 'Page created successfully',
-        page: id,
-      }
-    },
-  })
+  // const createMermaid = tool({
+  //   name: 'create_mermaid',
+  //   description: 'Create a new mermaid page',
+  //   parameters: type({
+  //     id: 'string',
+  //     title: 'string',
+  //   }),
+  //   execute: async ({ id, title }) => {
+  //     const result = checkExist(id)
+  //     if (result) {
+  //       return result
+  //     }
+  //     const p: MermaidPage = {
+  //       id,
+  //       title,
+  //       type: PageType.MERMAID,
+  //       steps: [],
+  //       notes: [],
+  //     }
+  //     pages.push(p)
+  //     chunker({
+  //       type: 'page',
+  //       options: p,
+  //     } as PageCreationAction<MermaidPage>)
+  //     return {
+  //       success: true,
+  //       message: 'Page created successfully',
+  //       page: id,
+  //     }
+  //   },
+  // })
 
-  const setMermaid = tool({
-    name: 'set_mermaid',
-    description: 'Set the mermaid on a page',
-    parameters: type({
-      page: type('string').describe('The page id to set the mermaid on'),
-      content: type('string').describe('The mermaid code to set on the page'),
-    }),
-    execute: async ({ page, content }) => {
-      const targetPage = pages.find(p => p.id === page)
-      if (!targetPage) {
-        return {
-          success: false,
-          message: 'Page not found',
-        }
-      }
-      const action: FullizeAction<MermaidPageAction> = {
-        type: 'set-mermaid',
-        options: { content },
-        page: targetPage.id,
-      }
-      targetPage.steps.push(action)
-      chunker(action)
-      return {
-        success: true,
-        message: 'Mermaid set successfully',
-        page: targetPage.id,
-      }
-    },
-  })
+  // const setMermaid = tool({
+  //   name: 'set_mermaid',
+  //   description: 'Set the mermaid on a page',
+  //   parameters: type({
+  //     page: type('string').describe('The page id to set the mermaid on'),
+  //     content: type('string').describe('The mermaid code to set on the page'),
+  //   }),
+  //   execute: async ({ page, content }) => {
+  //     const targetPage = pages.find(p => p.id === page)
+  //     if (!targetPage) {
+  //       return {
+  //         success: false,
+  //         message: 'Page not found',
+  //       }
+  //     }
+  //     const action: FullizeAction<MermaidPageAction> = {
+  //       type: 'set-mermaid',
+  //       options: { content },
+  //       page: targetPage.id,
+  //     }
+  //     targetPage.steps.push(action)
+  //     chunker(action)
+  //     return {
+  //       success: true,
+  //       message: 'Mermaid set successfully',
+  //       page: targetPage.id,
+  //     }
+  //   },
+  // })
 
   const note = tool({
     name: 'note',
@@ -268,5 +267,6 @@ export const getAgentTools = async (
     },
   })
 
-  return await Promise.all([createCanvas, createMermaid, setMermaid, note, draw, createSlider]) as Tool[]
+  // return await Promise.all([createCanvas, createMermaid, setMermaid, note, draw]) as Tool[]
+  return await Promise.all([createCanvas, note, draw]) as Tool[]
 }
