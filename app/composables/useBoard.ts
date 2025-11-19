@@ -67,9 +67,9 @@ export const useBoard = () => {
     container.className = 'mermaid'
     container.style.width = '90%'
     container.style.height = '100%'
-    container.style.display = 'flex'
+    container.style.display = 'block'
     container.style.maxHeight = '500px'
-    container.style.overflowY = 'auto'
+    container.style.overflow = 'auto'
     board.value!.appendChild(container)
     const renderer = createMermaidRenderer(container)
     rendererMap.set(page.id!, renderer)
@@ -89,7 +89,7 @@ export const useBoard = () => {
   const loadPages = (pages: Page[]) => pages.forEach(loadPage)
 
   const handleAction: ActionHandler = (action) => {
-    console.log('handleAction', action)
+    // console.log('handleAction', action)
     if (['document'].includes(action.type)) {
       handleCanvasAction(action)
     } else if (action.type === 'page') {

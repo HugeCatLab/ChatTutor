@@ -37,10 +37,15 @@ export const createAgent = (options: AgentOptions) => {
     { images }: AdditionalInput = {}
   ) => {
     // Mermaid block parser
+    const emitText = (chunk: string) => {
+      if (!chunk || chunk.trim().length === 0) return
+      const trimmedChunk = chunk.trim()
+      chunker({ type: 'text', options: { chunk: trimmedChunk } } as TextChunkAction)
+    }
     const parser = createBlockParser({
       pages: options.pages,
       emit: (action) => chunker(action),
-      emitText: (chunk) => chunker({ type: 'text', options: { chunk } } as TextChunkAction),
+      emitText: emitText,
     })
 
     const tools = (await Promise.all([

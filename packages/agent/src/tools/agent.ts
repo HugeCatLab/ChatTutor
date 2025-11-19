@@ -143,6 +143,7 @@ export const getAgentTools = async (
   //       type: PageType.MERMAID,
   //       steps: [],
   //       notes: [],
+  //       forms: [],
   //     }
   //     pages.push(p)
   //     chunker({
@@ -267,6 +268,5 @@ export const getAgentTools = async (
     },
   })
 
-  // return await Promise.all([createCanvas, createMermaid, setMermaid, note, draw]) as Tool[]
-  return await Promise.all([createCanvas, note, draw]) as Tool[]
+  return await Promise.all([createCanvas, createSlider, note, draw]) as Tool[]
 }
