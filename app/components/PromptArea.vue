@@ -165,7 +165,7 @@ defineExpose({
     <textarea
       ref="textareaRef"
       v-model="input"
-      class="size-full bg-transparent outline-none resize-none text-gray-500"
+      class="size-full bg-transparent outline-none resize-none text-gray-500 md:flex-1"
       @keydown="shortCutSend"
     />
     <div
@@ -183,7 +183,7 @@ defineExpose({
         />
       </div>
     </div>
-    <div class="flex flex-row items-center justify-center md:justify-end w-full h-10">
+    <div class="flex flex-row items-center justify-center md:w-full h-10">
       <div class="flex flex-row w-full items-center justify-start">
         <ButtonContainer
           class="size-8 justify-center items-center flex"

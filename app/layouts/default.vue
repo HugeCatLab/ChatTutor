@@ -81,7 +81,7 @@ onMounted(() => {
         </Transition>
       </div>
     </div>
-    <div class="flex size-full">
+    <div class="flex size-full max-md:ml-20">
       <slot />
     </div>
   </div>
