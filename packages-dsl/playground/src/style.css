@@ -1,11 +1,20 @@
 .container-common {
   border-radius: 6px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--colors-gray-200);
   padding: 6px;
 }
 
 .container-interactive:hover {
-  background-color: #e7e7e7;
+  background-color: var(--colors-gray-200);
+}
+
+@media (prefers-color-scheme: dark) {
+  .container-interactive:hover {
+    background-color: var(--colors-gray-800);
+  }
+  .container-common {
+    border: 1px solid var(--colors-gray-700);
+  }
 }
 
 /* .preview {
@@ -14,3 +23,4 @@
   padding: 6px;
   font-size: var(--dsl-size-2xs);
 } */
+

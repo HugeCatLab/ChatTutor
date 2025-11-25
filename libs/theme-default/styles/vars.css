@@ -4,16 +4,36 @@
   --dsl-background-accent: #f0f8ff;
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    --dsl-background: #000;
+    --dsl-background-accent: #1b1c1d;
+  }
+}
+
 /* Base Color Palette */
 :root {
   --dsl-primary: #666666;
-  --dsl-note: #C7EDCC;
-  --dsl-warning: #F7B051;
-  --dsl-accent: #F7B051;
-  --dsl-alert: #F76E67;
-  --dsl-info: #4DDEF6;
-  --dsl-success: #66ECDD;
-  --dsl-creative: #CCB8E4;
+  --dsl-note: #c7edcc;
+  --dsl-warning: #f7b051;
+  --dsl-accent: #f7b051;
+  --dsl-alert: #f76e67;
+  --dsl-info: #4ddef6;
+  --dsl-success: #66ecdd;
+  --dsl-creative: #ccb8e4;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --dsl-primary: #ebebeb;
+    --dsl-note: #94eda0;
+    --dsl-warning: #f7b051;
+    --dsl-accent: #f7b051;
+    --dsl-alert: #f76e67;
+    --dsl-info: #4ddef6;
+    --dsl-success: #66ecdd;
+    --dsl-creative: #ccb8e4;
+  }
 }
 
 /* Transparent Marker Colors */
@@ -48,10 +68,10 @@
 
 /* Font */
 :root {
-  --dsl-font-primary: 'Inter', sans-serif;
-  --dsl-font-comic: 'Comic Sans MS', cursive;
-  --dsl-font-code: 'JetBrains Mono', monospace;
-  --dsl-font-math: 'Times New Roman', serif;
+  --dsl-font-primary: "Inter", sans-serif;
+  --dsl-font-comic: "Comic Sans MS", cursive;
+  --dsl-font-code: "JetBrains Mono", monospace;
+  --dsl-font-math: "Times New Roman", serif;
 }
 
 /* Dash Array */
