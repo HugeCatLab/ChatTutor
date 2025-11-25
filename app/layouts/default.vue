@@ -41,10 +41,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="min-h-screen w-full bg-gray-50 flex flex-row">
+  <div class="min-h-screen w-full bg-gray-50 flex flex-row dark:bg-gray-900">
     <div
       class="fixed z-9999 left-0 top-0 md:relative h-screen max-h-screen flex flex-col p-5 transition-all duration-300 ease-in-out overflow-hidden"
-      :class="collapsed ? 'w-4/5 md:w-80 bg-gray-200 shadow-lg' : 'w-20 bg-transparent md:bg-gray-200'">
+      :class="`${(collapsed ? 'w-4/5 md:w-80 shadow-lg' : 'w-20 bg-transparent md:bg-gray-200')} bg-gray-200 dark:bg-gray-800`">
       <ButtonContainer class="size-10 justify-center items-center flex" @click="collapsed = !collapsed">
         <FontAwesomeIcon :icon="faBars" />
       </ButtonContainer>

@@ -46,7 +46,7 @@ const save = () => {
     <div class="flex w-full flex-row gap-2 h-9 justify-start items-center">
       <span class="text-md text-gray-500 w-30">{{ label }}</span>
       <input v-model="model"
-        class="size-full p-2 bg-transparent outline-none resize-none text-gray-500 focus:outline-none rounded-lg shadow-sm border border-gray-300">
+        class="size-full p-2 bg-transparent outline-none resize-none text-gray-500 focus:outline-none rounded-lg shadow-sm border border-gray-300 dark:border-gray-500">
       <div class="relative h-9 overflow-hidden button-container" :class="saved ? 'w-0' : 'w-9'">
         <Transition name="expand">
           <ButtonContainer v-if="!saved"

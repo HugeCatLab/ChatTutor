@@ -9,7 +9,7 @@ const { baseURL, apiKey, agentModel, painterModel, titleModel, saveBaseURL, save
     <div class="flex flex-col w-2/3 p-10 gap-10">
       <h1
         :class="titleStyle"
-        class="text-xl md:text-2xl"
+        class="text-xl md:text-2xl dark:text-gray-300"
       >
         Settings
       </h1>
@@ -17,7 +17,7 @@ const { baseURL, apiKey, agentModel, painterModel, titleModel, saveBaseURL, save
       <div class="w-full flex flex-col gap-5">
         <h2
           :class="titleStyle"
-          class="text-md md:text-lg text-gray-500"
+          class="text-md md:text-lg text-gray-500 dark:text-gray-400"
         >
           Models
         </h2>
