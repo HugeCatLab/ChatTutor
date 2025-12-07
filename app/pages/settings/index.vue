@@ -5,8 +5,8 @@ const { baseURL, apiKey, agentModel, painterModel, titleModel, saveBaseURL, save
 </script>
 
 <template>
-  <div class="size-full flex flex-col justify-center items-center p-5">
-    <div class="flex flex-col w-2/3 p-10 gap-10">
+  <div class="flex h-[100vh] w-full flex-col items-center p-5 overflow-scroll relative">
+    <div class="flex flex-col md:w-2/3 p-10 gap-10">
       <h1
         :class="titleStyle"
         class="text-xl md:text-2xl dark:text-gray-300"
@@ -56,6 +56,12 @@ const { baseURL, apiKey, agentModel, painterModel, titleModel, saveBaseURL, save
             @save="saveTitleModel"
           />
         </div>
+        <h2
+          :class="titleStyle"
+          class="text-md md:text-lg text-gray-500 dark:text-gray-400"
+        >
+          Interface
+        </h2>
       </div>
     </div>
   </div>

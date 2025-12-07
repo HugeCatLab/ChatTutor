@@ -38,10 +38,11 @@ onMounted(() => {
     clearInterval(interval)
   })
 })
+
 </script>
 
 <template>
-  <div class="min-h-screen w-full flex flex-row ">
+  <div class="min-h-screen w-full flex flex-row">
     <div
       class="fixed z-9999 left-0 top-0 md:relative h-screen max-h-screen flex flex-col p-5 transition-all duration-300 ease-in-out overflow-hidden"
       :class="`${(collapsed ? 'w-4/5 md:w-80 shadow-lg' : 'w-20 bg-transparent md:bg-gray-200')} bg-gray-200 dark:bg-gray-800`">
@@ -51,7 +52,7 @@ onMounted(() => {
       <div class="flex h-full flex-col py-5 gap-3">
         <ButtonContainer class="flex flex-row w-full justify-center items-center gap-5 cursor-pointer select-none"
           @click="navigateTo('/settings')" v-show="width! > 768 || collapsed">
-            <FontAwesomeIcon :icon="faCog" />
+          <FontAwesomeIcon :icon="faCog" />
           <Transition name="fade">
             <span v-show="collapsed">Settings</span>
           </Transition>
@@ -81,7 +82,7 @@ onMounted(() => {
         </Transition>
       </div>
     </div>
-    <div class="flex size-full max-md:ml-20">
+    <div class="flex w-full max-md:ml-20">
       <slot />
     </div>
   </div>
@@ -94,7 +95,6 @@ onMounted(() => {
 .fade-leave-to {
   opacity: 0;
 }
-
 </style>
 
 <style>
@@ -102,10 +102,8 @@ onMounted(() => {
   --at-apply: bg-gray-50;
 }
 
-@media(prefers-color-scheme: dark) {
-  :root {
-    --at-apply: bg-gray-900;
-  }
-}
 
+:root.dark {
+  --at-apply: bg-gray-900;
+}
 </style>
