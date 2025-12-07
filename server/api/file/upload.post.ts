@@ -1,19 +1,27 @@
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
 
 export default defineEventHandler(async (event) => {
-  console.log(JSON.stringify({s :process.env.OSS_REGION}), process.env.OSS_ENDPOINT, process.env.OSS_ACCESS_KEY, process.env.OSS_SECRET_KEY)
+  console.log(
+    JSON.stringify({ s: process.env.OSS_REGION }),
+    process.env.OSS_ENDPOINT,
+    process.env.OSS_ACCESS_KEY,
+    process.env.OSS_SECRET_KEY
+  )
   const client = new S3Client({
-    region: process.env.OSS_REGION || process.env.OSS_REGION === '' ? 'default' : process.env.OSS_REGION,
+    region:
+      process.env.OSS_REGION || process.env.OSS_REGION === ''
+        ? 'default'
+        : process.env.OSS_REGION,
     endpoint: process.env.OSS_ENDPOINT,
     credentials: {
       accessKeyId: process.env.OSS_ACCESS_KEY!,
       secretAccessKey: process.env.OSS_SECRET_KEY!,
     },
-    forcePathStyle: !(process.env.OSS_REGION!),
+    forcePathStyle: true,
   })
-  
+
   const formData = await readMultipartFormData(event)
-  const file = formData?.find(f => f.name === 'file')
+  const file = formData?.find((f) => f.name === 'file')
 
   if (!file?.data || !file.filename) {
     throw createError({ statusCode: 400, message: 'No file uploaded' })
