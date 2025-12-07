@@ -62,6 +62,11 @@ const { baseURL, apiKey, agentModel, painterModel, titleModel, saveBaseURL, save
         >
           Interface
         </h2>
+        <SelectArea
+          v-model="$colorMode.preference"
+          label="Color Mode"
+          :options="[['Light', 'light'], ['Dark', 'dark'], ['Follow system', 'system']]"
+        />
       </div>
     </div>
   </div>
