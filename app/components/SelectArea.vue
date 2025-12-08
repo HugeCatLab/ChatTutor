@@ -21,7 +21,7 @@ watch(modelValue, (value) => {
       <span class="flex-1" />
       <div class="relative">
         <div class="flex flex-row justify-between items-center pl-2 pr-2 rounded-lg shadow-sm border border-gray-300 dark:border-gray-500 text-gray-400 absolute top-0 left-0 size-full">
-          <span>{{ options.find(([_, value]) => value == modelValue)![0] }}</span>
+          <span class="truncate">{{ options.find(([_, value]) => value == modelValue)![0] }}</span>
           <FontAwesomeIcon
             :icon="faChevronDown"
             class="w-3 h-3"
