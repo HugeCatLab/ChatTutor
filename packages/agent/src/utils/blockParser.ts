@@ -1,7 +1,13 @@
-import type { FullAction, FullizeAction, Page } from '@chat-tutor/shared'
+import type { Action, FullAction, Page } from '@chat-tutor/shared'
 import type { PageCreationAction } from '@chat-tutor/agent'
-import { PageType } from '@chat-tutor/shared'
-import { MermaidPage, MermaidPageAction } from '@chat-tutor/mermaid'
+import type { MermaidPage } from '@chat-tutor/mermaid'
+import { mermaidBlockResolver } from './mermaid'
+import { noteBlockResolver } from './note'
+
+export type BlockResolver = (context: {
+  page: Page
+  content: string
+}, emit: Emit) => Action | FullAction
 
 type Emit = (action: FullAction | PageCreationAction) => void
 
@@ -12,16 +18,20 @@ export interface BlockParserOptions {
 }
 
 type BlockMeta = {
-  type: 'mermaid' | 'note'
+  type: string
   page: string
   title?: string
 }
 
 const fenceStart = '```'
-const mermaidStart = /^```(mermaid|note)\[([^\]\s|;]+)(?:;([^\]]+))?\](?:\|([^\n`]+))?/m
-const mermaidEnd = /^```[\t ]*(?:\r?\n)?/
+const blockStart = /^```\s*(mermaid|note)\s*\[([^\]\s|;]+)(?:;([^\]]+))?\](?:\|([^\n`]+))?[\t ]*(?:\r?\n)?/m
+const blockEnd = /^```[\t ]*(?:\r?\n)?/
 
 export const createBlockParser = ({ pages, emit, emitText }: BlockParserOptions) => {
+  const blockResolvers = new Map<string, BlockResolver>()
+
+  blockResolvers.set('mermaid', mermaidBlockResolver)
+  blockResolvers.set('note', noteBlockResolver)
   let buffer = ''
   // TODO: extend to note and code etc...
   let blockMeta: BlockMeta | null = null
@@ -30,27 +40,62 @@ export const createBlockParser = ({ pages, emit, emitText }: BlockParserOptions)
   
   const flushPlainText = () => {
     if (!buffer || blockMeta) return
-    const trimmedText = buffer.trim()
-    if (trimmedText && trimmedText.length > 0) {
-      emitText(trimmedText)
+
+    // Check for partial fence at end of buffer
+    // Only if we are not inside a block (where we wait for end fence)
+    // But wait, if we are inside a block, we are buffering content until ```
+    // So flushPlainText is mainly for 'idle' state or 'await_head' (before fence found)
+
+    let keepLen = 0
+    if (state === 'idle') {
+      if (buffer.endsWith('``')) keepLen = 2
+      else if (buffer.endsWith('`')) keepLen = 1
     }
-    buffer = ''
+
+    const textToEmit = buffer.slice(0, buffer.length - keepLen)
+    const keptText = buffer.slice(buffer.length - keepLen)
+
+    if (textToEmit.length > 0) {
+      // Don't trim here, let emitText handle it or preserve spaces
+      // Original was: const trimmedText = buffer.trim(); emitText(trimmedText)
+      // We'll preserve original behavior of calling emitText, but pass non-trimmed 
+      // if we want to fix space eating, but here we just pass the text slice.
+      // The original code did trim(), which might be why spaces are lost.
+      // Let's pass it as is for now, but check validity.
+      // If original intent was to ignore empty whitespace chunks, we can check trim().length
+
+      // However, if we split "Hello world" into "Hello " and "world", 
+      // trimming "Hello " -> "Hello" is bad.
+      // So we should NOT trim if we want to support streaming correctly.
+      // But emitText implementation in index.ts trims it anyway. 
+      // So changing it here won't fix index.ts behavior, but it's a start.
+
+      if (textToEmit.trim().length > 0) {
+        emitText(textToEmit)
+      } else {
+        // If it's just whitespace? 
+        // If buffer is " ", and we don't emit it, we lose space.
+        // But emitText checks trimmed length > 0.
+        // So whitespace-only chunks are ignored by emitText anyway.
+        // We can't fix that here without changing index.ts.
+      }
+    }
+    buffer = keptText
   }
 
   // Check if page exists, if not create it
-  const ensurePage = (id: string, title?: string, type = PageType.MERMAID) => {
+  const ensurePage = (id: string, type: string, title?: string) => {
     let page = pages.find(p => p.id === id)
     if (!page) {
       page = {
         id,
         title: title || 'Untitled',
-        type: PageType.MERMAID,
+        type,
         steps: [],
         notes: [],
         forms: [],
       }
       pages.push(page)
-      // Emit page creation action
       emit({
         type: 'page',
         options: page,
@@ -73,18 +118,12 @@ export const createBlockParser = ({ pages, emit, emitText }: BlockParserOptions)
       return
     }
     // Handle mermaid block
-    if (block.type === 'mermaid') {
-      const page = ensurePage(block.page, block.title, PageType.MERMAID) as MermaidPage
-      const action: FullizeAction<MermaidPageAction> = {
-        type: 'set-mermaid',
-        options: { content: trimmedContent },
-        page: block.page,
-      }
-      page.steps.push(action)
-      emit(action)
-      // For debug purpose, also output the mermaid content as text
-      // emitText(trimmedContent)
+    const resolver = blockResolvers.get(block.type)
+    if (!resolver) {
+      return blockMeta = null
     }
+    const page = ensurePage(block.page, block.type, block.title) as MermaidPage
+    resolver({ page, content: trimmedContent }, emit)
     blockMeta = null
   }
       
@@ -102,14 +141,14 @@ export const createBlockParser = ({ pages, emit, emitText }: BlockParserOptions)
       // Flush text before fence
       console.log('Found fence at index:', fenceIdx)
       if (fenceIdx > 0) {
-        const trimmedText = buffer.slice(0, fenceIdx).trim()
-        if (trimmedText && trimmedText.length > 0) {
-          emitText(buffer.slice(0, fenceIdx))
-          buffer = buffer.slice(fenceIdx)
+        const textBeforeFence = buffer.slice(0, fenceIdx)
+        if (textBeforeFence.trim().length > 0) {
+          emitText(textBeforeFence)
         }
+        buffer = buffer.slice(fenceIdx)
       }
       // Match mermaid head
-      const headMatch = buffer.match(mermaidStart)
+      const headMatch = buffer.match(blockStart)
       // Not get the full head yet
       if (!headMatch || headMatch.index !== 0) return
       // Full head matched, extract page meta info
@@ -126,7 +165,7 @@ export const createBlockParser = ({ pages, emit, emitText }: BlockParserOptions)
     // Found the end fence
     const content = buffer.slice(0, endIdx)
     const tail = buffer.slice(endIdx)
-    const endMatch = tail.match(mermaidEnd)
+    const endMatch = tail.match(blockEnd)
     if (!endMatch || endMatch.index !== 0) return
     // Full block matched
     buffer = tail.slice(endMatch[0].length)

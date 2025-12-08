@@ -4,10 +4,9 @@ import type { Tool, Message } from 'xsai'
 import { tool } from 'xsai'
 import { type } from 'arktype'
 import type { CanvasPage, DocumentAction } from '@chat-tutor/canvas'
-import type { MermaidPage, MermaidPageAction } from '@chat-tutor/mermaid'
 import { createPainterAgent } from '../painter'
 import type { AgentChunker } from '../types'
-import type { PageCreationAction, PageNoteAction } from '..'
+import type { PageCreationAction } from '..'
 
 export type CanvasPageDrawStartAction = Action<{
   page: string
@@ -188,36 +187,36 @@ export const getAgentTools = async (
   //   },
   // })
 
-  const note = tool({
-    name: 'note',
-    description: 'Add markdown note on a page',
-    parameters: type({
-      page: type('string').describe('The page to note'),
-      content: type('string').describe('The markdown content to add on the page note area.'),
-    }),
-    execute: async ({ page, content }) => {
-      const targetPage = pages.find(p => p.id === page)
-      if (!targetPage) {
-        return {
-          success: false,
-          message: 'Page not found',
-        }
-      }
-      targetPage.notes.push(content)
-      const action: PageNoteAction = {
-        type: 'note',
-        options: { content },
-        page: targetPage.id,
-      }
-      chunker(action)
-      return {
-        success: true,
-        message: 'Note added successfully',
-        page: page,
-      }
-    },
-    strict: false
-  })
+  // const note = tool({
+  //   name: 'note',
+  //   description: 'Add markdown note on a page',
+  //   parameters: type({
+  //     page: type('string').describe('The page to note'),
+  //     content: type('string').describe('The markdown content to add on the page note area.'),
+  //   }),
+  //   execute: async ({ page, content }) => {
+  //     const targetPage = pages.find(p => p.id === page)
+  //     if (!targetPage) {
+  //       return {
+  //         success: false,
+  //         message: 'Page not found',
+  //       }
+  //     }
+  //     targetPage.notes.push(content)
+  //     const action: PageNoteAction = {
+  //       type: 'note',
+  //       options: { content },
+  //       page: targetPage.id,
+  //     }
+  //     chunker(action)
+  //     return {
+  //       success: true,
+  //       message: 'Note added successfully',
+  //       page: page,
+  //     }
+  //   },
+  //   strict: false
+  // })
 
   const draw = tool({
     name: 'draw',
@@ -268,5 +267,5 @@ export const getAgentTools = async (
     },
   })
 
-  return await Promise.all([createCanvas, createSlider, note, draw]) as Tool[]
+  return await Promise.all([createCanvas, createSlider, draw]) as Tool[]
 }

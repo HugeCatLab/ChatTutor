@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
-import { MarkdownRender } from 'vue-renderer-markdown'
+import { MarkdownRender } from 'markstream-vue'
 
 defineProps<{
   content: string

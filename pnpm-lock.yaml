@@ -95,6 +95,9 @@ importers:
       katex:
         specifier: ^0.16.25
         version: 0.16.25
+      markstream-vue:
+        specifier: 0.0.2-beta.9
+        version: 0.0.2-beta.9(katex@0.16.25)(mermaid@11.12.1)(shiki@3.14.0)(stream-monaco@0.0.2(monaco-editor@0.52.2))(vue@3.5.22(typescript@5.9.3))
       mermaid:
         specifier: ^11.12.1
         version: 11.12.1
@@ -119,9 +122,6 @@ importers:
       vue:
         specifier: ^3.5.22
         version: 3.5.22(typescript@5.9.3)
-      vue-renderer-markdown:
-        specifier: 0.0.61-beta.7
-        version: 0.0.61-beta.7(katex@0.16.25)(mermaid@11.12.1)(shiki@3.14.0)(stream-monaco@0.0.2(monaco-editor@0.52.2))(vue@3.5.22(typescript@5.9.3))
       vue-router:
         specifier: ^4.6.3
         version: 4.6.3(vue@3.5.22(typescript@5.9.3))
@@ -5404,9 +5404,6 @@ packages:
   markdown-it-container@4.0.0:
     resolution: {integrity: sha512-HaNccxUH0l7BNGYbFbjmGpf5aLHAMTinqRZQAEQbMr2cdD3z91Q6kIo1oUn1CQndkT03jat6ckrdRYuwwqLlQw==}
 
-  markdown-it-emoji@3.0.0:
-    resolution: {integrity: sha512-+rUD93bXHubA4arpEZO3q80so0qgoFJEKRkRbjKX8RTdca89v2kfyF+xR3i2sQTwql9tpPZPOQN5B+PunspXRg==}
-
   markdown-it-footnote@4.0.0:
     resolution: {integrity: sha512-WYJ7urf+khJYl3DqofQpYfEYkZKbmXmwxQV8c8mO/hGIhgZ1wOe7R4HLFNwqx7TjILbnC98fuyeSsin19JdFcQ==}
 
@@ -5425,9 +5422,9 @@ packages:
   markdown-it-task-checkbox@1.0.6:
     resolution: {integrity: sha512-7pxkHuvqTOu3iwVGmDPeYjQg+AIS9VQxzyLP9JCg9lBjgPAJXGEkChK6A2iFuj3tS0GV3HG2u5AMNhcQqwxpJw==}
 
-  markdown-it@14.1.0:
-    resolution: {integrity: sha512-a54IwgWPaeBCAAsv13YgmALOF1elABB08FxO9i+r4VFk5Vl4pKokRPeX8u5TCgSsPi6ec1otfLjdOpVcgbpshg==}
-    hasBin: true
+  markdown-it-ts@0.0.2-beta.9:
+    resolution: {integrity: sha512-pULDAgVgttlTKZLd7Q+DAebkOIkNzzhjELviBjbXIwyd6Fg5NjomHJocI335SZ4F20daEBbqIWa5kSblBJya1A==}
+    engines: {node: '>=18'}
 
   markdown-table@3.0.4:
     resolution: {integrity: sha512-wiYz4+JrLyb/DqW2hkFJxP7Vd7JuTDm77fvbM8VfEQdmSMqcImWeeRbHwZjBjIFki/VaMK2BhFi7oUUZeM5bqw==}
@@ -5436,6 +5433,30 @@ packages:
     resolution: {integrity: sha512-ntROs7RaN3EvWfy3EZi14H4YxmT6A5YvywfhO+0pm+cH/dnSQRmdAmoFIc3B9aiwTehyk7pESH4ofyBY+V5hZg==}
     engines: {node: '>= 20'}
     hasBin: true
+
+  markstream-vue@0.0.2-beta.9:
+    resolution: {integrity: sha512-UVtwXbuAWNBU6JsVWwaqhw60YvhdR0Rbp5AKCzcbL49fBFAB6GKNDlIsrDzEvfmozQZSM8/1t9szgYZfZuAxjg==}
+    peerDependencies:
+      katex: '>=0.16.22'
+      mermaid: '>=11'
+      shiki: ^3.13.0
+      stream-markdown: '>=0.0.10'
+      stream-monaco: '>=0.0.7'
+      vue: '>=3.0.0'
+      vue-i18n: '>=9'
+    peerDependenciesMeta:
+      katex:
+        optional: true
+      mermaid:
+        optional: true
+      shiki:
+        optional: true
+      stream-markdown:
+        optional: true
+      stream-monaco:
+        optional: true
+      vue-i18n:
+        optional: true
 
   mdast-util-find-and-replace@3.0.2:
     resolution: {integrity: sha512-Tmd1Vg/m3Xz43afeNxDIhWRtFZgM2VLyaf4vSTYwudTyeuTneoL3qtWMA5jeLyz/O1vDJmmV4QuScFCA2tBPwg==}
@@ -6719,8 +6740,8 @@ packages:
   std-env@3.10.0:
     resolution: {integrity: sha512-5GS12FdOZNliM5mAOxFRg7Ir0pWz8MdpYm6AY6VPkGpbA7ZzmbzNcBJQ0GPvvyWgcY7QAhCgf9Uy89I03faLkg==}
 
-  stream-markdown-parser@0.0.14:
-    resolution: {integrity: sha512-o+l/T1wo2pbaXl7iwxdkW7qjRoux+wTRtkUYmvEDhnR+auSOoNqa64WC0QFM/55zdX8HsquK86bTlkBpY8wsBg==}
+  stream-markdown-parser@0.0.35:
+    resolution: {integrity: sha512-bkFxH/Csi4CHDI2H+aq9EHsixQyB9gNiUPfx1QHYIe27PcgRwVwQ67VKY571T8m9fXWV993gQf5x4/Jt1xL3mw==}
 
   stream-monaco@0.0.2:
     resolution: {integrity: sha512-vf7mWmVMvIdEgLPUiaF9riIxSHt5Vd/J+RRxT8R7OUgPBHo0CsBjWMCmUE4L4MMZednpY+MUY9fwfmA3pQm0Xg==}
@@ -7574,30 +7595,6 @@ packages:
 
   vue-flow-layout@0.2.0:
     resolution: {integrity: sha512-zKgsWWkXq0xrus7H4Mc+uFs1ESrmdTXlO0YNbR6wMdPaFvosL3fMB8N7uTV308UhGy9UvTrGhIY7mVz9eN+L0Q==}
-
-  vue-renderer-markdown@0.0.61-beta.7:
-    resolution: {integrity: sha512-4EewyP1wJ4+4fyqy7ccz0z6Sv+EeztwBOGjiMOxMCZnAplhs25GUooNsq30lED0xwx4YF5m7pHTsAmeISACTcA==}
-    peerDependencies:
-      katex: '>=0.16.22'
-      mermaid: '>=11'
-      shiki: ^3.13.0
-      stream-markdown: '>=0.0.8'
-      stream-monaco: '>=0.0.2'
-      vue: '>=3.0.0'
-      vue-i18n: '>=9'
-    peerDependenciesMeta:
-      katex:
-        optional: true
-      mermaid:
-        optional: true
-      shiki:
-        optional: true
-      stream-markdown:
-        optional: true
-      stream-monaco:
-        optional: true
-      vue-i18n:
-        optional: true
 
   vue-router@4.6.3:
     resolution: {integrity: sha512-ARBedLm9YlbvQomnmq91Os7ck6efydTSpRP3nuOKCvgJOHNrhRoJDSKtee8kcL1Vf7nz6U+PMBL+hTvR3bTVQg==}
@@ -13913,8 +13910,6 @@ snapshots:
 
   markdown-it-container@4.0.0: {}
 
-  markdown-it-emoji@3.0.0: {}
-
   markdown-it-footnote@4.0.0: {}
 
   markdown-it-ins@4.0.0: {}
@@ -13927,9 +13922,8 @@ snapshots:
 
   markdown-it-task-checkbox@1.0.6: {}
 
-  markdown-it@14.1.0:
+  markdown-it-ts@0.0.2-beta.9:
     dependencies:
-      argparse: 2.0.1
       entities: 4.5.0
       linkify-it: 5.0.0
       mdurl: 2.0.0
@@ -13939,6 +13933,17 @@ snapshots:
   markdown-table@3.0.4: {}
 
   marked@16.4.1: {}
+
+  markstream-vue@0.0.2-beta.9(katex@0.16.25)(mermaid@11.12.1)(shiki@3.14.0)(stream-monaco@0.0.2(monaco-editor@0.52.2))(vue@3.5.22(typescript@5.9.3)):
+    dependencies:
+      '@floating-ui/dom': 1.7.4
+      stream-markdown-parser: 0.0.35
+      vue: 3.5.22(typescript@5.9.3)
+    optionalDependencies:
+      katex: 0.16.25
+      mermaid: 11.12.1
+      shiki: 3.14.0
+      stream-monaco: 0.0.2(monaco-editor@0.52.2)
 
   mdast-util-find-and-replace@3.0.2:
     dependencies:
@@ -15775,17 +15780,16 @@ snapshots:
 
   std-env@3.10.0: {}
 
-  stream-markdown-parser@0.0.14:
+  stream-markdown-parser@0.0.35:
     dependencies:
-      markdown-it: 14.1.0
       markdown-it-container: 4.0.0
-      markdown-it-emoji: 3.0.0
       markdown-it-footnote: 4.0.0
       markdown-it-ins: 4.0.0
       markdown-it-mark: 4.0.0
       markdown-it-sub: 2.0.0
       markdown-it-sup: 2.0.0
       markdown-it-task-checkbox: 1.0.6
+      markdown-it-ts: 0.0.2-beta.9
 
   stream-monaco@0.0.2(monaco-editor@0.52.2):
     dependencies:
@@ -16749,17 +16753,6 @@ snapshots:
       - supports-color
 
   vue-flow-layout@0.2.0: {}
-
-  vue-renderer-markdown@0.0.61-beta.7(katex@0.16.25)(mermaid@11.12.1)(shiki@3.14.0)(stream-monaco@0.0.2(monaco-editor@0.52.2))(vue@3.5.22(typescript@5.9.3)):
-    dependencies:
-      '@floating-ui/dom': 1.7.4
-      stream-markdown-parser: 0.0.14
-      vue: 3.5.22(typescript@5.9.3)
-    optionalDependencies:
-      katex: 0.16.25
-      mermaid: 11.12.1
-      shiki: 3.14.0
-      stream-monaco: 0.0.2(monaco-editor@0.52.2)
 
   vue-router@4.6.3(vue@3.5.22(typescript@5.8.3)):
     dependencies:

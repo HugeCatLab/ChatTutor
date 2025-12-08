@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { MarkdownRender } from 'vue-renderer-markdown'
+import { MarkdownRender } from 'markstream-vue'
 import { v4 } from 'uuid'
 
 const { handleAction, board, loadPages, currentPages, page, notes, forms } = useBoard()

@@ -4,7 +4,7 @@ import { getAgentTools } from './tools'
 import type { Action, FullAction, Page } from '@chat-tutor/shared'
 import type { ReadableStream } from 'node:stream/web'
 import type { AgentChunker, BaseAgentOptions } from './types'
-import { createBlockParser } from '../utils/blockParser'
+import { createBlockParser } from './utils/blockParser'
 
 export type TextChunkAction = Action<{ chunk: string }, 'text'>
 export type PageCreationAction<T extends Page = Page> = Action<T, 'page'>

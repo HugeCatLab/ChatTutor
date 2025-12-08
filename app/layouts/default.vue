@@ -95,6 +95,20 @@ onMounted(() => {
 .fade-leave-to {
   opacity: 0;
 }
+
+</style>
+
+<style>
+:root {
+  --at-apply: bg-gray-50;
+}
+
+@media(prefers-color-scheme: dark) {
+  :root {
+    --at-apply: bg-gray-900;
+  }
+}
+
 </style>
 
 <style>
