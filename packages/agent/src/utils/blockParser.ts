@@ -110,7 +110,6 @@ export const createBlockParser = ({ pages, emit, emitText }: BlockParserOptions)
     const block = blockMeta as BlockMeta
     const trimmedContent = content.trimEnd()
     // debug: Check finished block content
-    console.log('Finished block:', block, 'with content:', trimmedContent)
     // Ignore empty block
     if (trimmedContent.length === 0) {
       blockMeta = null
@@ -139,7 +138,6 @@ export const createBlockParser = ({ pages, emit, emitText }: BlockParserOptions)
         state = 'await_head'
       }
       // Flush text before fence
-      console.log('Found fence at index:', fenceIdx)
       if (fenceIdx > 0) {
         const textBeforeFence = buffer.slice(0, fenceIdx)
         if (textBeforeFence.trim().length > 0) {

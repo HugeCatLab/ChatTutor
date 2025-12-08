@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { MarkdownRender } from 'markstream-vue'
 import { v4 } from 'uuid'
 
-const { handleAction, board, loadPages, currentPages, page, notes, forms } = useBoard()
+const { handleAction, loadPages, currentPages, page, notes } = useBoard()
 const { messages, input, resources, send, loadMessages, running } = useChat(handleAction)
 const promptAreaRef = ref()
 
@@ -56,21 +55,12 @@ onMounted(() => {
 <template>
   <div class="flex pt-10 md:pt-0 flex-col md:flex-row w-full h-full overflow-hidden">
     <div class="flex flex-1 flex-col h-full items-center justify-center overflow-hidden min-w-0 p-5 gap-2">
-      <div class="flex flex-row w-full h-full gap-1">
-        <div v-if="forms.length > 0" class="w-1/5 md:h-130">
-          <InteractiveForms :forms="forms" :page="page!" />
-        </div>
-        <div
-          ref="board"
-          class="h-50 md:h-130 w-3/5 flex justify-center"
-          :class="['w-full', 'w-4/5', 'w-3/5'][([forms.length > 0, notes.length > 0].filter(Boolean).length)]"
+      <div class="flex flex-row w-full h-full gap-1 h-50 md:h-130">
+        <Pages
+          :pages="currentPages"
+          :current-page="page!"
+          :notes="notes"
         />
-        <div
-          v-if="notes.length > 0"
-          class="h-130 shadow-sm max-h-50 md:max-h-130 w-1/5 text-sm dark:text-gray-200 flex flex-col bg-gray-100 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg p-3 overflow-y-auto markdown"
-        >
-          <MarkdownRender :content="notes.join('\n\n')" />
-        </div>
       </div>
       <div class="w-full h-20 md:h-auto max-w-screen-md justify-center flex flex-col gap-5">
         <PagesPreview
