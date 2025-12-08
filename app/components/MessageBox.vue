@@ -14,7 +14,7 @@ defineProps<{
 
 <template>
   <div
-    class="text-gray-600 px-2 markdown flex flex-col"
+    class="text-gray-600 dark:text-gray-200 px-2 markdown flex flex-col"
     :class="{ 'border border-rounded-lg': border, [classes]: true }"
   >
     <div class="flex flex-row items-center gap-2">
@@ -25,7 +25,10 @@ defineProps<{
         <FontAwesomeIcon :icon="faSpinner" />
       </div>
       <ClientOnly>
-        <MarkdownRender :content="content" />
+        <MarkdownRender
+          :content="content"
+          theme="dark"
+        />
       </ClientOnly>
     </div>
     <div class="flex flex-row w-full">

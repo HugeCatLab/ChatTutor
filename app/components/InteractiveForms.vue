@@ -39,7 +39,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="size-full flex flex-col gap-2 bg-gray-100 border border-gray-300 rounded-lg p-3 overflow-y-auto">
+  <div class="size-full flex flex-col gap-2 border border-gray-300 dark:border-gray-700 rounded-lg p-3 overflow-y-auto">
     <div
       v-for="form in forms"
       :key="form.title"

@@ -109,6 +109,10 @@ body {
   font-size: 1rem;
 }
 
+.dark .markdown code {
+  background-color: #44443d;
+}
+
 .markdown p {
   padding: 1rem 0;
 }

@@ -67,7 +67,7 @@ onMounted(() => {
         />
         <div
           v-if="notes.length > 0"
-          class="h-130 shadow-sm max-h-50 md:max-h-130 w-1/5 text-sm flex flex-col bg-gray-100 border border-gray-300 rounded-lg p-3 overflow-y-auto markdown"
+          class="h-130 shadow-sm max-h-50 md:max-h-130 w-1/5 text-sm dark:text-gray-200 flex flex-col bg-gray-100 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg p-3 overflow-y-auto markdown"
         >
           <MarkdownRender :content="notes.join('\n\n')" />
         </div>
@@ -79,7 +79,7 @@ onMounted(() => {
         />
       </div>
     </div>
-    <div class="flex flex-col h-screen max-h-screen bg-gray-200 w-full md:w-100 p-3 shadow-lg flex-shrink-0">
+    <div class="flex flex-col h-screen max-h-screen bg-gray-200 dark:bg-gray-800 w-full md:w-100 p-3 shadow-lg flex-shrink-0">
       <Chat
         ref="promptAreaRef"
         v-model:input="input"

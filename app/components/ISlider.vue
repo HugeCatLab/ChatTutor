@@ -16,8 +16,8 @@ const modelValue = computed({
 <template>
   <div class="flex flex-col w-full gap-2 py-2">
     <div class="flex justify-between items-center">
-      <span class="text-sm text-gray-500 font-medium">{{ title }}</span>
-      <span class="text-sm text-gray-700 font-mono bg-white px-2 rounded border border-gray-200">{{ modelValue }}</span>
+      <span class="text-sm text-gray-500 dark:text-gray-300 font-medium">{{ title }}</span>
+      <span class="text-sm text-gray-700 dark:text-gray-300 font-mono bg-white dark:bg-gray-950 px-2 rounded border border-gray-200 dark:border-gray-800">{{ modelValue }}</span>
     </div>
     <input
       v-model.number="modelValue"
@@ -25,7 +25,7 @@ const modelValue = computed({
       :min="min"
       :max="max"
       :step="step"
-      class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500 hover:accent-blue-600"
+      class="w-full h-2 bg-gray-200 dark:bg-gray-800 rounded-lg appearance-none cursor-pointer accent-blue-500 hover:accent-blue-600"
     >
     <div class="flex justify-between text-xs text-gray-400 px-1">
       <span>{{ min }}</span>
