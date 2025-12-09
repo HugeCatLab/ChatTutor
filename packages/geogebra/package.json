@@ -1,6 +1,6 @@
 {
   "name": "@chat-tutor/geogebra-applet",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "TypeScript type declarations for GeoGebra Apps API",
   "types": "./src/index.d.ts",
   "exports": {
