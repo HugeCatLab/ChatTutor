@@ -21,7 +21,6 @@
     "@aws-sdk/client-s3": "^3.927.0",
     "@aws-sdk/s3-request-presigner": "^3.927.0",
     "@chat-tutor/agent": "workspace:*",
-    "@chat-tutor/mermaid": "workspace:*",
     "@chat-tutor/shared": "workspace:*",
     "@chat-tutor/geogebra-applet": "workspace:*",
     "@fortawesome/fontawesome-svg-core": "^7.0.0",
