@@ -4,7 +4,7 @@ import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons'
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { MarkdownRender } from 'markstream-vue'
 
-defineProps<{
+const props = defineProps<{
   content: string
   icon?: IconDefinition | null
   images: string[]
@@ -20,6 +20,8 @@ defineProps<{
 const emit = defineEmits<{
   click: []
 }>()
+
+console.log(props.content)
 
 const expanded = ref(false)
 
@@ -47,14 +49,13 @@ const toggleExpand = () => {
       >
         <FontAwesomeIcon :icon="icon" />
       </div>
-      <div class="flex-1 min-w-0">
+      <div class="flex-1 min-w-0 markdown">
         <ClientOnly>
           <MarkdownRender
             v-if="isMarkdown"
             :content="content"
             theme="dark"
           />
-          <span v-else>{{ content }}</span>
         </ClientOnly>
       </div>
       <div
@@ -79,7 +80,7 @@ const toggleExpand = () => {
     </div>
     <div
       v-if="expandable && expandContent && expanded"
-      class="ml-6 mt-1 p-2 bg-gray-100 dark:bg-gray-800 rounded text-xs text-gray-600 dark:text-gray-300 overflow-auto max-h-60"
+      class="markdown ml-6 mt-1 p-2 bg-gray-100 dark:bg-gray-800 rounded text-xs text-gray-600 dark:text-gray-300 overflow-auto max-h-60"
     >
       <ClientOnly>
         <MarkdownRender

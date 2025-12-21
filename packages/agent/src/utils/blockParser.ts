@@ -94,9 +94,7 @@ export const createBlockParser = ({ pages, emit, emitText }: BlockParserOptions)
     const keptText = buffer.slice(buffer.length - keepLen)
 
     if (textToEmit.length > 0) {
-      if (textToEmit.trim().length > 0) {
-        emitText(textToEmit)
-      }
+      emitText(textToEmit)
     }
     buffer = keptText
   }
@@ -112,7 +110,7 @@ export const createBlockParser = ({ pages, emit, emitText }: BlockParserOptions)
       // Emit text before plan tag
       if (planStartIdx > 0) {
         const textBefore = buffer.slice(0, planStartIdx)
-        if (textBefore.trim().length > 0) {
+        if (textBefore.length > 0) {
           emitText(textBefore)
         }
       }
@@ -254,7 +252,7 @@ export const createBlockParser = ({ pages, emit, emitText }: BlockParserOptions)
       // Flush text before fence
       if (fenceIdx > 0) {
         const textBeforeFence = buffer.slice(0, fenceIdx)
-        if (textBeforeFence.trim().length > 0) {
+        if (textBeforeFence.length > 0) {
           emitText(textBeforeFence)
         }
         buffer = buffer.slice(fenceIdx)

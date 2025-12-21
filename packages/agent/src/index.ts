@@ -43,9 +43,8 @@ export const createAgent = (options: AgentOptions) => {
   ) => {
     // Mermaid block parser
     const emitText = (chunk: string) => {
-      if (!chunk || chunk.trim().length === 0) return
-      const trimmedChunk = chunk.trim()
-      chunker({ type: 'text', options: { chunk: trimmedChunk } } as TextChunkAction)
+      if (!chunk || chunk.length === 0) return
+      chunker({ type: 'text', options: { chunk } } as TextChunkAction)
     }
     const parser = createBlockParser({
       pages: options.pages,
