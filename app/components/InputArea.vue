@@ -49,6 +49,7 @@ const save = () => {
     <template #tailing>
       <input
         v-model="model"
+        :type="type"
         class="size-full p-2 bg-transparent outline-none resize-none text-gray-500 focus:outline-none rounded-lg shadow-sm border border-gray-300 dark:border-gray-500"
       >
       <div
