@@ -5,7 +5,7 @@ const { baseURL, apiKey, agentModel, titleModel, saveBaseURL, saveAPIKey, saveAg
 </script>
 
 <template>
-  <div class="flex h-[100vh] w-full flex-col items-center p-5 overflow-scroll relative">
+  <div class="flex h-[100vh] w-full flex-col items-center p-5 overflow-y-auto relative">
     <div class="flex flex-col md:w-2/3 p-10 gap-10">
       <h1 :class="titleStyle" class="text-xl md:text-2xl dark:text-gray-300">
         Settings
