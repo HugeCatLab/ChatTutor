@@ -7,6 +7,7 @@ defineProps<{
   type: InputTypeHTMLAttribute
   label: string
   description?: string
+  placeholder?: string
 }>()
 
 const model = defineModel<string>('model', { required: false, default: '' })
@@ -50,7 +51,8 @@ const save = () => {
       <input
         v-model="model"
         :type="type"
-        class="size-full p-2 bg-transparent outline-none resize-none text-gray-500 focus:outline-none rounded-lg shadow-sm border border-gray-300 dark:border-gray-500"
+        :placeholder="placeholder"
+        class="size-full p-2 bg-transparent outline-none resize-none text-gray-500 focus:outline-none rounded-lg shadow-sm border border-gray-300 dark:border-gray-500 placeholder:italic placeholder:opacity-50"
       >
       <div
         class="h-9 button-container"
