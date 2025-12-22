@@ -67,16 +67,24 @@ const expandLanguage = computed(() => {
 })
 
 const handleClick = () => {
-  if (['page', 'draw', 'set-mermaid', 'note', 'ggb'].includes(message.type)) {
-    page.value = (message as PageMessage | NoteMessage | SetMermaidMessage | DrawMessage | GGBMessage).page
+  if (['page', 'set-mermaid', 'note', 'ggb'].includes(message.type)) {
+    page.value = (message as PageMessage | NoteMessage | SetMermaidMessage | GGBMessage).page
   }
 }
 </script>
 
 <template>
-  <MessageBox :content="content" :icon="icon" :running="running" :images="message.type === 'user' ? message.images : []"
-    :clickable="['page', 'draw', 'set-mermaid', 'note', 'ggb'].includes(message.type)" :is-markdown="isMarkdown"
-    :show-border="message.type === 'user'" :expandable="expandable" :expand-content="expandContent"
+  <MessageBox
+    :content="content"
+    :icon="icon"
+    :running="running"
+    :images="message.type === 'user' ? message.images : []"
+    :clickable="['page', 'draw', 'set-mermaid', 'note', 'ggb'].includes(message.type)"
+    :is-markdown="isMarkdown"
+    :show-border="message.type === 'user'"
+    :expandable="expandable"
+    :expand-content="expandContent"
     :expand-language="expandLanguage"
-    @click="handleClick" />
+    @click="handleClick"
+  />
 </template>

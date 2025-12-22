@@ -9,6 +9,7 @@ const props = defineProps<{
 
 const id = `ggb-${uuid()}`
 const apiRef = ref<GGBAppletAPI | null>(null)
+const containerRef = ref<HTMLDivElement | null>(null)
 
 const loadGGBApplet = () => new Promise<{
   api: GGBAppletAPI
@@ -28,12 +29,30 @@ const loadGGBApplet = () => new Promise<{
 })
 
 onMounted(async () => {
+  await nextTick()
   const { api } = await loadGGBApplet()
   apiRef.value = api
   console.log('GGBApplet loaded', api)
-})
 
-console.log('props.page', props.page)
+  // Force recalculate to ensure proper sizing
+  nextTick(() => {
+    api.recalculateEnvironments()
+  })
+
+  // Use ResizeObserver to handle container size changes
+  if (containerRef.value) {
+    const resizeObserver = new ResizeObserver(() => {
+      if (api) {
+        api.recalculateEnvironments()
+      }
+    })
+    resizeObserver.observe(containerRef.value)
+
+    onBeforeUnmount(() => {
+      resizeObserver.disconnect()
+    })
+  }
+})
 
 watch([apiRef, () => props.page.steps], ([api, steps]) => {
   if (!api) return
@@ -48,5 +67,5 @@ watch([apiRef, () => props.page.steps], ([api, steps]) => {
 </script>
 
 <template>
-  <div :id="id" class="size-full" />
+  <div :id="id" ref="containerRef" class="flex size-full" />
 </template>
