@@ -10,7 +10,7 @@ defineProps<{
   placeholder?: string
 }>()
 
-const model = defineModel<string>('model', { required: false, default: '' })
+const model = defineModel<string>({ required: false, default: '' })
 
 const saved = ref(true)
 let lastSaved = model.value
