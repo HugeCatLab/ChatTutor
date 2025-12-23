@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { Resource } from '../components/PromptArea.vue'
 
+const { t } = useI18n()
+
 const input = ref('')
 const running = ref(false)
 const resources = ref<Resource[]>([])
@@ -28,6 +30,11 @@ const getTime = (): 'morning' | 'afternoon' | 'evening' => {
   if (hour < 18) return 'afternoon'
   return 'evening'
 }
+
+const greeting = computed(() => {
+  const time = getTime()
+  return t('home.title', { time: t(`home.greeting.${time}`) })
+})
 </script>
 
 <template>
@@ -41,11 +48,11 @@ const getTime = (): 'morning' | 'afternoon' | 'evening' => {
           height="32"
         >
       </div>
-      <span class="text-xl font-semibold text-gray-400 select-none">ChatTutor</span>
+      <span class="text-xl font-semibold text-gray-400 select-none">{{ t('common.chatTutor') }}</span>
     </div>
     <div class="size-full h-full flex flex-col gap-10 items-center justify-center py-10">
       <h1 class="title text-3xl md:text-4xl font-mono flex text-center pt-24 select-none">
-        Good {{ getTime() }}, Let's start!
+        {{ greeting }}
       </h1>
       <div class="w-full flex flex-col h-full justify-end md:justify-center items-center mb-auto">
         <div class="flex justify-end px-10 w-full md:max-w-200 h-35">

@@ -4,6 +4,7 @@ import { faBars, faAdd, faCog } from '@fortawesome/free-solid-svg-icons'
 
 const route = useRouter().currentRoute
 const width: Ref<number | null> = ref(null)
+const { t } = useI18n()
 
 const collapsed = ref(false)
 onMounted(() => {
@@ -54,20 +55,20 @@ onMounted(() => {
           @click="navigateTo('/settings')" v-show="width! > 768 || collapsed">
           <FontAwesomeIcon :icon="faCog" />
           <Transition name="fade">
-            <span v-show="collapsed">Settings</span>
+            <span v-show="collapsed">{{ t('settings.title') }}</span>
           </Transition>
         </ButtonContainer>
         <ButtonContainer class="flex flex-row w-full items-center justify-center gap-5 cursor-pointer select-none"
           @click="navigateTo('/')" v-show="width! > 768 || collapsed">
           <FontAwesomeIcon :icon="faAdd" />
           <Transition name="fade">
-            <span v-show="collapsed">New Chat</span>
+            <span v-show="collapsed">{{  t('common.newChat') }}</span>
           </Transition>
         </ButtonContainer>
         <Transition name="fade">
           <div v-show="collapsed" class="flex flex-col gap-5 text-gray-600 overflow-y-auto">
             <h2 class="text-sm font-bold select-none">
-              Recent
+              {{ t('common.recent') }}
             </h2>
             <ButtonContainer v-for="chat in chats" :key="chat.id" class="text-sm w-full cursor-pointer select-none p-2"
               @click="navigateTo(`/chat/${chat.id}`)">

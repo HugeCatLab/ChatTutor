@@ -2,6 +2,8 @@
 import { MarkdownRender } from 'markstream-vue'
 import { PageType } from '@chat-tutor/shared'
 
+const { t } = useI18n()
+
 const props = defineProps<{
   pages: Page[]
   currentPage: string
@@ -32,7 +34,7 @@ const areaClasses = 'shadow-sm dark:text-gray-200 bg-gray-100 dark:bg-gray-900 b
       <div :class="areaClasses" class="absolute inset-0 markdown p-3 text-sm overflow-y-auto">
         <h3
           class="text-lg font-bold text-gray-500 dark:text-gray-400 mb-2 border-b border-gray-300 dark:border-gray-700 pb-2">
-          Notes
+          {{ t('chat.notes') }}
         </h3>
         <MarkdownRender :content="notes.join('\n\n')" />
       </div>

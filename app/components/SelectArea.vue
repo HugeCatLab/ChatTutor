@@ -29,7 +29,7 @@ watch(modelValue, (value) => {
         </div>
         <select
           v-model="modelValue"
-          class="opacity-0 h-9"
+          class="opacity-0 h-9 min-w-36"
           :name="label"
         >
           <option

@@ -2,6 +2,8 @@
 import type { Message, GGBMessage, SetMermaidMessage, PlanMessage } from '#shared/types'
 import { messageIcons } from '../utils/message-icons'
 
+const { t } = useI18n()
+
 const { message } = defineProps<{
   message: Message
 }>()
@@ -12,15 +14,21 @@ const content = computed(() => {
   if (['assistant', 'user'].includes(message.type)) {
     return (message as AssistantMessage).content
   } else if (message.type === 'set-mermaid') {
-    return message.running ? `Setting mermaid on ${message.page}...` : `Mermaid set on ${message.page}`
+    return message.running 
+      ? t('message.types.setMermaid.running', { page: message.page }) 
+      : t('message.types.setMermaid.completed', { page: message.page })
   } else if (message.type === 'note') {
-    return message.running ? `Adding note to ${message.page}...` : `Note added to ${message.page}`
+    return message.running 
+      ? t('message.types.note.running', { page: message.page }) 
+      : t('message.types.note.completed', { page: message.page })
   } else if (message.type === 'ggb') {
-    return message.running ? `Running GeoGebra script on ${message.page}...` : `GeoGebra script executed on ${message.page}`
+    return message.running 
+      ? t('message.types.ggb.running', { page: message.page }) 
+      : t('message.types.ggb.completed', { page: message.page })
   } else if (message.type === 'page') {
-    return `Created ${message.pageType.toUpperCase()} page: ${message.page}`
+    return t('message.types.page.created', { pageType: message.pageType.toUpperCase(), page: message.page })
   } else if (message.type === 'plan') {
-    return message.running ? 'Planning...' : 'Planning completed'
+    return message.running ? t('message.types.plan.running') : t('message.types.plan.completed')
   }
   return ''
 })
