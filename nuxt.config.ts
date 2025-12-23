@@ -2,12 +2,32 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  modules: ['@nuxt/eslint', '@nuxt/ui', '@unocss/nuxt'],
+  modules: ['@nuxt/eslint', '@nuxt/ui', '@unocss/nuxt', '@nuxtjs/i18n'],
   css: [
     '@/assets/css/main.css',
     '@/assets/css/markdown.css',
     'katex/dist/katex.min.css',
   ],
+  i18n: {
+    locales: [
+      { 
+        code: 'en', 
+        language: 'en', 
+        name: 'English',
+        file: 'en.json'
+      },
+      { 
+        code: 'zh', 
+        language: 'zh-CN', 
+        name: '简体中文',
+        file: 'zh.json'
+      }
+    ],
+    strategy: 'no_prefix',
+    detectBrowserLanguage: {
+      fallbackLocale: 'en'
+    }
+  },
   app: {
     head: {
       title: 'ChatTutor — 智能对话式辅助教学',
