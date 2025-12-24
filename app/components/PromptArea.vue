@@ -2,6 +2,8 @@
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faPaperPlane, faSpinner, faImage } from '@fortawesome/free-solid-svg-icons'
 
+const { t } = useI18n()
+
 const input = defineModel<string>('input', { required: true })
 const resources = defineModel<Resource[]>('resources', { required: true })
 const textareaRef = ref<HTMLTextAreaElement | null>(null)
@@ -28,6 +30,7 @@ const sendUserInput = () => {
 const shortCutSend = (event: KeyboardEvent) => {
   // cmd+enter (Mac) or ctrl+enter (Windows/Linux)
   if (running) return
+  if (input.value.trim() === '') return
   if (event.key === 'Enter' && (event.metaKey || event.ctrlKey)) {
     event.preventDefault()
     sendUserInput()
@@ -165,7 +168,7 @@ defineExpose({
     <textarea
       ref="textareaRef"
       v-model="input"
-      class="size-full bg-transparent outline-none resize-none text-gray-500 md:flex-1"
+      class="size-full bg-transparent outline-none resize-none text-gray-500 md:flex-1 p-1"
       @keydown="shortCutSend"
     />
     <div
@@ -187,7 +190,7 @@ defineExpose({
       <div class="flex flex-row w-full items-center justify-start">
         <ButtonContainer
           class="size-8 justify-center items-center flex"
-          :class="{ 'opacity-50 cursor-not-allowed': uploading }"
+          :disabled="uploading"
           @click="handleImageButtonClick"
         >
           <FontAwesomeIcon
@@ -207,15 +210,17 @@ defineExpose({
       </div>
       <div class="w-full flex flex-row mr-auto justify-end">
         <ButtonContainer
-          class="size-8 justify-center items-center flex"
-          :class="{ 'opacity-50 cursor-not-allowed': running }"
+          class="h-8 w-20 justify-center items-center flex"
+          :disabled="running || input.trim() === ''"
           @click="send"
         >
           <FontAwesomeIcon
             :icon="running ? faSpinner : faPaperPlane"
-            class="size-4"
+            class="size-4 mr-2"
             :class="{ 'animate-spin': running }"
           />
+          {{ t('chat.send') }}
+          
         </ButtonContainer>
       </div>
     </div>

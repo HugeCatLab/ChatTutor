@@ -65,6 +65,7 @@
     "actionTip": "Drag to move {'|'} Scroll to zoom"
   },
   "chat": {
-    "notes": "Notes"
+    "notes": "Notes",
+    "send": "Send"
   }
 }
