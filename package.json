@@ -4,7 +4,14 @@
   "version": "1.0.0",
   "description": "ChatTutor Monorepo",
   "scripts": {
-    "test": "vitest"
+    "test": "vitest",
+    "lint": "eslint .",
+    "dev": "pnpm --filter @chat-tutor/* dev",
+    "dev:client": "pnpm --filter @chat-tutor/client dev",
+    "dev:web": "pnpm --filter @chat-tutor/web dev",
+    "build": "pnpm --filter @chat-tutor/* build",
+    "build:client": "pnpm --filter @chat-tutor/client build",
+    "build:web": "pnpm --filter @chat-tutor/web build"
   },
   "packageManager": "pnpm@10.14.0",
   "dependencies": {
