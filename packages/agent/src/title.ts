@@ -1,7 +1,7 @@
 import { generateText, message } from 'xsai'
-import type { BaseAgentOptions } from './types'
+import type { AgentOptions } from './types'
 
-export const getTitle = async (options: BaseAgentOptions, input: string) => {
+export const getTitle = async (options: AgentOptions, input: string) => {
   const { text } = await generateText({
     model: options.model,
     apiKey: options.apiKey,

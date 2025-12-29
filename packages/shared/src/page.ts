@@ -4,7 +4,7 @@ export interface BasePage {
   id: string
   title: string
   type: string
-  steps: Action<any, any>[]
+  steps: Action<object, string>[]
 }
 
 export enum PageType {

@@ -9,7 +9,7 @@ import { GGBCompleteAction } from '@chat-tutor/shared'
 export type BlockResolver = (context: {
   page: BasePage
   content: string
-}, emit: Emit) => Action<any, any> | void
+}, emit: Emit) => Action<object, string> | void
 
 type Emit = (action: ClientAction | void) => void
 
