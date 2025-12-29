@@ -1,11 +1,30 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import { Button, Input } from '@chat-tutor/ui'
+import {
+  Button,
+  Input,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@chat-tutor/ui'
 </script>
 
 <template>
-  <Button :size="'lg'">Click me</Button>
-  <Input placeholder="Enter your name" />
+  <div class="p-8 space-y-4">
+    <Button :size="'lg'">Click me</Button>
+    <Input placeholder="Enter your name" />
+    <Select>
+      <SelectTrigger>
+        <SelectValue placeholder="Select an option" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="1">Option 1</SelectItem>
+        <SelectItem value="2">Option 2</SelectItem>
+        <SelectItem value="3">Option 3</SelectItem>
+      </SelectContent>
+    </Select>
+  </div>
 </template>
 
 <style scoped>
