@@ -1,6 +1,6 @@
 import type { VariantProps } from 'class-variance-authority'
 import type { HTMLAttributes } from 'vue'
-import type { ButtonVariants } from '@/components/ui/button'
+import type { ButtonVariants } from '@/components/button'
 import { cva } from 'class-variance-authority'
 
 export { default as InputGroup } from './InputGroup.vue'
