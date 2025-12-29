@@ -1,14 +1,9 @@
-import type { BlockResolver } from './blockParser'
-import type { Action, FullizeAction, Page, PageType } from '@chat-tutor/shared'
-import type { PageNoteAction } from '../index'
-
-export type MermaidPageSetAction = Action<{ content: string }, 'set-mermaid'>
-export type MermaidPageAction = MermaidPageSetAction
-export type MermaidPage = Page<MermaidPageAction | PageNoteAction, PageType.MERMAID>
+import type { BlockResolver } from './block-parser'
+import type { MermaidUpdateAction } from '@chat-tutor/shared'
 
 export const mermaidBlockResolver: BlockResolver = ({ page, content }, emit) => {
-  const action: FullizeAction<MermaidPageAction> = {
-    type: 'set-mermaid',
+  const action: MermaidUpdateAction = {
+    type: 'mermaid-update',
     options: { content: content },
     page: page.id,
   }

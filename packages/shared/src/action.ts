@@ -27,11 +27,29 @@ export type PlanCompleteAction = TaskCompleteAction<{ content: string }, 'plan'>
 
 export type NoteTaskAction = TaskAction<{ }, 'note'>
 export type NoteCompleteAction = TaskCompleteAction<{ content: string }, 'note'>
+export type NoteAppendAction = Action<{ content: string }, 'note-append'>
 
 export type MermaidTaskAction = TaskAction<{ }, 'mermaid'>
 export type MermaidCompleteAction = TaskCompleteAction<{ content: string }, 'mermaid'>
+export type MermaidUpdateAction = Action<{ content: string }, 'mermaid-update'>
 
 export type GGBTaskAction = TaskAction<{ }, 'ggb'>
 export type GGBCompleteAction = TaskCompleteAction<{ content: string }, 'ggb'>
+export type GGBScriptExcuteAction = Action<{ content: string }, 'ggbscript-excute'>
 
-export type ClientAction = TextAction | PageCreateAction | PlanTaskAction | PlanCompleteAction | TaskAction<any, any> | TaskCompleteAction<any, any>
+export type ClientAction =
+  | TextAction
+  | PageCreateAction
+  | PlanTaskAction
+  | PlanCompleteAction
+  | TaskAction<any, any>
+  | TaskCompleteAction<any, any>
+  | MermaidUpdateAction
+  | MermaidTaskAction
+  | MermaidCompleteAction
+  | GGBTaskAction
+  | GGBCompleteAction
+  | GGBScriptExcuteAction
+  | NoteTaskAction
+  | NoteCompleteAction
+  | NoteAppendAction

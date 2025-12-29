@@ -8,7 +8,14 @@ export interface BasePage {
 }
 
 export enum PageType {
-  TEXT = 'text',
   MERMAID = 'mermaid',
   GGB = 'ggb',
+}
+
+export interface GGBPage extends BasePage {
+  type: PageType.GGB
+}
+
+export interface MermaidPage extends BasePage {
+  type: PageType.MERMAID
 }

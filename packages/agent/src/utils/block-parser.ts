@@ -1,4 +1,3 @@
-import type { MermaidPage } from './mermaid'
 import { mermaidBlockResolver } from './mermaid'
 import { noteBlockResolver } from './note'
 import { ggbBlockResolver } from './ggb'
@@ -37,7 +36,7 @@ const planEndTag = '</plan>'
 export const createBlockParser = ({ pages, emit, emitText }: BlockParserOptions) => {
   const blockResolvers = new Map<string, {
     resolver: BlockResolver
-    pageType: PageType
+    pageType?: PageType
   }>()
 
   blockResolvers.set('mermaid', {
@@ -45,8 +44,7 @@ export const createBlockParser = ({ pages, emit, emitText }: BlockParserOptions)
     pageType: PageType.MERMAID,
   })
   blockResolvers.set('note', {
-    resolver: noteBlockResolver,
-    pageType: PageType.TEXT,
+    resolver: noteBlockResolver
   })
   blockResolvers.set('ggbscript', {
     resolver: ggbBlockResolver,
@@ -144,8 +142,9 @@ export const createBlockParser = ({ pages, emit, emitText }: BlockParserOptions)
   }
 
   // Check if page exists, if not create it
-  const ensurePage = (id: string, type: string, title?: string) => {
+  const ensurePage = (id: string, type: string | null, title?: string) => {
     let page = pages.find(p => p.id === id)
+    if (!type) return page!
     if (!page) {
       page = {
         id,
@@ -235,7 +234,7 @@ export const createBlockParser = ({ pages, emit, emitText }: BlockParserOptions)
     if (!resolver) {
       return blockMeta = null
     }
-    const page = ensurePage(block.page, pageType, block.title)
+    const page = ensurePage(block.page, pageType || null, block.title)
     // Emit the actual action with data (this will be added to steps)
     resolver({ page, content: trimmedContent }, emit)
     // Emit end action
@@ -274,7 +273,7 @@ export const createBlockParser = ({ pages, emit, emitText }: BlockParserOptions)
       // Ensure page exists before emitting start action
       const resolverInfo = blockResolvers.get(type)
       if (resolverInfo) {
-        ensurePage(pageId, resolverInfo.pageType, title)
+        ensurePage(pageId, resolverInfo.pageType || null, title)
       }
       // Emit start action when block starts
       emitStartAction(type, pageId, taskId)
