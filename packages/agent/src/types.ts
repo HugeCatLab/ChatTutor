@@ -1,10 +1,15 @@
-import type { Message } from 'xsai'
+import type { ModelMessage } from 'ai'
 
-export interface BaseAgentOptions {
+export interface AgentOptions {
   apiKey: string
   baseURL: string
   model: string
-  messages: Message[]
+  messages: ModelMessage[]
+}
+
+export interface AgentInput {
+  user: string
+  images?: string[]
 }
 
 export type AgentChunker<T = unknown> = (chunk: T) => void

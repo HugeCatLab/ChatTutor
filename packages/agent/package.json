@@ -11,7 +11,9 @@
   },
   "packageManager": "pnpm@10.8.1",
   "dependencies": {
+    "@chat-tutor/shared": "workspace:*",
     "@types/node": "^24.10.0",
+    "ai": "^6.0.3",
     "arktype": "^2.1.25",
     "dotenv": "^17.2.3",
     "xsai": "0.4.0-beta.8"

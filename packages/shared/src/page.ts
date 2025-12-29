@@ -6,3 +6,9 @@ export interface BasePage {
   type: string
   steps: Action<any, any>[]
 }
+
+export enum PageType {
+  TEXT = 'text',
+  MERMAID = 'mermaid',
+  GGB = 'ggb',
+}

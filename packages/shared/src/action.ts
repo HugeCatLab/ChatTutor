@@ -9,11 +9,12 @@ export interface Action<T, K extends string> {
 export interface TaskAction<T, J extends string, K extends object = {}> extends Action<T, 'task'> {
   taskId: string
   taskType: J
-  taskOptions: K
+  taskOptions?: K
 }
 
-export interface TaskCompleteAction<T> extends Action<T, 'task-complete'> {
+export interface TaskCompleteAction<T, J extends string> extends Action<T, 'task-complete'> {
   taskId: string
+  taskType: J
 }
 
 // Base actions
@@ -21,4 +22,16 @@ export interface TaskCompleteAction<T> extends Action<T, 'task-complete'> {
 export type TextAction = Action<{ text: string }, 'text'>
 export type PageCreateAction = Action<{ page: BasePage }, 'page-create'>
 
-export type ClientAction = TextAction | PageCreateAction | TaskAction<any, any> | TaskCompleteAction<any>
+export type PlanTaskAction = TaskAction<{ }, 'plan'>
+export type PlanCompleteAction = TaskCompleteAction<{ content: string }, 'plan'>
+
+export type NoteTaskAction = TaskAction<{ }, 'note'>
+export type NoteCompleteAction = TaskCompleteAction<{ content: string }, 'note'>
+
+export type MermaidTaskAction = TaskAction<{ }, 'mermaid'>
+export type MermaidCompleteAction = TaskCompleteAction<{ content: string }, 'mermaid'>
+
+export type GGBTaskAction = TaskAction<{ }, 'ggb'>
+export type GGBCompleteAction = TaskCompleteAction<{ content: string }, 'ggb'>
+
+export type ClientAction = TextAction | PageCreateAction | PlanTaskAction | PlanCompleteAction | TaskAction<any, any> | TaskCompleteAction<any, any>
