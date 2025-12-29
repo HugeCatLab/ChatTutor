@@ -1,0 +1,1 @@
+export { default as PromptArea } from './prompt-area.vue'

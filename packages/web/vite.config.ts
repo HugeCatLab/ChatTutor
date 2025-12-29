@@ -10,6 +10,7 @@ export default defineConfig({
     alias: {
       // Resolve @chat-tutor/ui internal path aliases
       '@': fileURLToPath(new URL('../ui/src', import.meta.url)),
+      '#': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
 })
