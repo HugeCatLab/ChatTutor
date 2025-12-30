@@ -1,15 +1,14 @@
 <script setup lang="ts">
 import { Sidebar } from '#/components/sidebar'
-import DefaultLayout from '#/layout/default.vue'
-import Home from './home.vue'
 </script>
 
 <template>
-  <DefaultLayout>
+  <div class="w-full flex">
     <Sidebar>
       <template #main>
-        <Home />
+        <RouterView />
       </template>
     </Sidebar>
-  </DefaultLayout>
+  </div>
 </template>
+

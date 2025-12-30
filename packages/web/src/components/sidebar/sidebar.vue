@@ -1,14 +1,16 @@
 <script setup lang="ts">
 import { Sidebar, SidebarContent, SidebarProvider, SidebarTrigger, SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from '@chat-tutor/ui'
 import SidebarChatHistory from './sidebar-chat-history.vue'
-import { ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faCog, faBars, faPlus } from '@fortawesome/free-solid-svg-icons'
 
-const route = useRoute()
 const router = useRouter()
-const open = ref(route.path === '/')
+const open = ref(false)
+watch(router.currentRoute, (route) => {
+  open.value = route.path === '/'
+}, { immediate: true })
 </script>
 
 <template>

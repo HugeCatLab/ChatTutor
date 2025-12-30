@@ -1,14 +1,5 @@
-<script setup lang="ts">
-import DefaultLayout from '#/layout/default.vue'
-import { Sidebar } from '#/components/sidebar'
-</script>
-
 <template>
-  <DefaultLayout>
-    <Sidebar>
-      <template #main>
-        Chat
-      </template>
-    </Sidebar>
-  </DefaultLayout>
+  <div class="size-full flex items-center justify-center">
+    <h1 class="text-2xl">Chat Page</h1>
+  </div>
 </template>
