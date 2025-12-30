@@ -6,7 +6,7 @@
   "scripts": {
     "test": "vitest",
     "lint": "eslint . --fix",
-    "dev": "pnpm --filter @chat-tutor/* dev",
+    "dev": "pnpm --filter @chat-tutor/*  --parallel dev",
     "dev:client": "pnpm --filter @chat-tutor/client dev",
     "dev:web": "pnpm --filter @chat-tutor/web dev",
     "build": "pnpm --filter @chat-tutor/* build",

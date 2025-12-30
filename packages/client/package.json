@@ -3,14 +3,19 @@
   "version": "1.0.50",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "bun run --watch src/index.ts"
+    "dev": "bun run --env-file=\"../../.env\" --watch src/index.ts"
   },
   "exports": {
     "./sdk": "./src/sdk.ts"
   },
   "dependencies": {
+    "@chat-tutor/db": "workspace:*",
+    "@chat-tutor/shared": "workspace:*",
+    "@elysiajs/cors": "^1.4.1",
     "@elysiajs/eden": "^1.4.6",
-    "elysia": "latest"
+    "dotenv": "^17.2.3",
+    "elysia": "latest",
+    "zod": "^4.2.1"
   },
   "devDependencies": {
     "bun-types": "latest"

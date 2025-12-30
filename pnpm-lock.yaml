@@ -86,12 +86,27 @@ importers:
 
   packages/client:
     dependencies:
+      '@chat-tutor/db':
+        specifier: workspace:*
+        version: link:../db
+      '@chat-tutor/shared':
+        specifier: workspace:*
+        version: link:../shared
+      '@elysiajs/cors':
+        specifier: ^1.4.1
+        version: 1.4.1(elysia@1.4.19(@sinclair/typebox@0.34.45)(exact-mirror@0.2.5(@sinclair/typebox@0.34.45))(file-type@21.2.0)(openapi-types@12.1.3)(typescript@5.9.3))
       '@elysiajs/eden':
         specifier: ^1.4.6
         version: 1.4.6(elysia@1.4.19(@sinclair/typebox@0.34.45)(exact-mirror@0.2.5(@sinclair/typebox@0.34.45))(file-type@21.2.0)(openapi-types@12.1.3)(typescript@5.9.3))
+      dotenv:
+        specifier: ^17.2.3
+        version: 17.2.3
       elysia:
         specifier: latest
         version: 1.4.19(@sinclair/typebox@0.34.45)(exact-mirror@0.2.5(@sinclair/typebox@0.34.45))(file-type@21.2.0)(openapi-types@12.1.3)(typescript@5.9.3)
+      zod:
+        specifier: ^4.2.1
+        version: 4.2.1
     devDependencies:
       bun-types:
         specifier: latest
@@ -199,6 +214,9 @@ importers:
 
   packages/web:
     dependencies:
+      '@chat-tutor/client':
+        specifier: workspace:*
+        version: link:../client
       '@chat-tutor/ui':
         specifier: workspace:*
         version: link:../ui
@@ -578,6 +596,11 @@ packages:
 
   '@drizzle-team/brocli@0.10.2':
     resolution: {integrity: sha512-z33Il7l5dKjUgGULTqBsQBQwckHh5AbIuxhdsIxDDiZAzBOrZO6q9ogcWC65kU382AfynTfgNumVcNIjuIua6w==}
+
+  '@elysiajs/cors@1.4.1':
+    resolution: {integrity: sha512-lQfad+F3r4mNwsxRKbXyJB8Jg43oAOXjRwn7sKUL6bcOW3KjUqUimTS+woNpO97efpzjtDE0tEjGk9DTw8lqTQ==}
+    peerDependencies:
+      elysia: '>= 1.4.0'
 
   '@elysiajs/eden@1.4.6':
     resolution: {integrity: sha512-Tsa4NwXEWg/u73vWiYZQ3L5/ecgZSxqiEjYwpS+4qBKXeTZqZKl2hcgHJSVBL+InEDMi35Xugct7qyAXE5oM4Q==}
@@ -4374,6 +4397,10 @@ snapshots:
       - '@algolia/client-search'
 
   '@drizzle-team/brocli@0.10.2': {}
+
+  '@elysiajs/cors@1.4.1(elysia@1.4.19(@sinclair/typebox@0.34.45)(exact-mirror@0.2.5(@sinclair/typebox@0.34.45))(file-type@21.2.0)(openapi-types@12.1.3)(typescript@5.9.3))':
+    dependencies:
+      elysia: 1.4.19(@sinclair/typebox@0.34.45)(exact-mirror@0.2.5(@sinclair/typebox@0.34.45))(file-type@21.2.0)(openapi-types@12.1.3)(typescript@5.9.3)
 
   '@elysiajs/eden@1.4.6(elysia@1.4.19(@sinclair/typebox@0.34.45)(exact-mirror@0.2.5(@sinclair/typebox@0.34.45))(file-type@21.2.0)(openapi-types@12.1.3)(typescript@5.9.3))':
     dependencies:

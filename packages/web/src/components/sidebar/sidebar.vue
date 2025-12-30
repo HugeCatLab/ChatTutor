@@ -2,11 +2,12 @@
 import { Sidebar, SidebarContent, SidebarProvider, SidebarTrigger, SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from '@chat-tutor/ui'
 import SidebarChatHistory from './sidebar-chat-history.vue'
 import { ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faCog, faBars, faPlus } from '@fortawesome/free-solid-svg-icons'
 
 const route = useRoute()
+const router = useRouter()
 const open = ref(route.path === '/')
 </script>
 
@@ -31,7 +32,7 @@ const open = ref(route.path === '/')
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton as-child tooltip="New Chat">
+                <SidebarMenuButton as-child tooltip="New Chat" @click="router.push('/')">
                   <div class="size-4">
                     <FontAwesomeIcon :icon="faPlus" />
                     <span>New Chat</span>

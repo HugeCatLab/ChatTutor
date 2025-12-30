@@ -1,20 +1,19 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { PromptArea, type Resource } from '#/components/prompt-area'
+import { client } from '#/utils/client'
 
 const input = ref('')
 const resources = ref<Resource[]>([])
 const running = ref(false)
 
-const handleSend = (message: string, attachments: Resource[]) => {
-  console.log('Message:', message)
-  console.log('Attachments:', attachments)
-
-  // Simulate sending message
-  running.value = true
-  setTimeout(() => {
-    running.value = false
-  }, 2000)
+const handleSend = async (message: string, attachments: Resource[]) => {
+  const { data, error } = await client.chat.post({})
+  if (error) {
+    return
+  }
+  const { id } = data
+  console.log(id)
 }
 </script>
 
