@@ -4,15 +4,14 @@ import { SidebarGroup, SidebarGroupLabel, SidebarGroupContent, SidebarMenu, Side
 const items = [
   {
     title: 'Chat History',
-    url: '/chat-history',
-    icon: 'mdi:history',
+    url: '/chat',
   },
 ]
 </script>
 
 <template>
   <SidebarGroup>
-    <SidebarGroupLabel>Application</SidebarGroupLabel>
+    <SidebarGroupLabel>Recent</SidebarGroupLabel>
     <SidebarGroupContent>
       <SidebarMenu>
         <SidebarMenuItem
@@ -21,7 +20,6 @@ const items = [
         >
           <SidebarMenuButton as-child>
             <a :href="item.url">
-              <component :is="item.icon" />
               <span>{{ item.title }}</span>
             </a>
           </SidebarMenuButton>
