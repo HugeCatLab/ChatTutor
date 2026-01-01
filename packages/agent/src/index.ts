@@ -9,9 +9,9 @@ export const createAgent = (options: AgentOptions) => {
   const gateway = createGateway({
     apiKey: options.apiKey,
     baseURL: options.baseURL,
+    provider: options.provider,
   })
   if (options.messages.length === 0) {
-    console.log(agent.system())
     options.messages.push({
       role: 'system', content: agent.system()
     })
@@ -34,7 +34,6 @@ export const createAgent = (options: AgentOptions) => {
         ...(images?.map(image => ({ type: 'image' as const, image: new URL(image) })) || []),
       ]
     })
-    console.log(options.messages)
     const { textStream, response } = streamText({
       model: gateway(options.model),
       messages: options.messages,
@@ -45,7 +44,15 @@ export const createAgent = (options: AgentOptions) => {
         options: { text: chunk },
       })
     }
+    emit({
+      type: 'end',
+      options: {},
+    })
     const messages = (await response).messages
     options.messages.push(...messages)
+    console.log(options.messages.length)
   }
 }
+
+export * from './title'
+export * from './types'

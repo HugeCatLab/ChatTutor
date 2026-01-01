@@ -1,17 +1,20 @@
 import { createOpenAI } from '@ai-sdk/openai'
+import { createAnthropic } from '@ai-sdk/anthropic'
+import { AgentProvider } from './types'
 
 export interface GatewayOptions {
   apiKey: string
   baseURL: string
-  provider?: 'openai'
+  provider?: AgentProvider
 }
 
 export const createGateway = ({ apiKey, baseURL, provider = 'openai' }: GatewayOptions) => {
-  switch (provider) {
-    case 'openai':
-      return createOpenAI({
-        apiKey,
-        baseURL,
-      })
+  const providers = {
+    'openai': createOpenAI,
+    'anthropic': createAnthropic,
   }
+  return providers[provider]({
+    apiKey,
+    baseURL,
+  })
 }

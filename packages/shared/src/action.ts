@@ -21,6 +21,7 @@ export interface TaskCompleteAction<T, J extends string> extends Action<T, 'task
 
 export type TextAction = Action<{ text: string }, 'text'>
 export type PageCreateAction = Action<{ page: BasePage }, 'page-create'>
+export type EndAction = Action<object, 'end'>
 
 export type PlanTaskAction = TaskAction<object, 'plan'>
 export type PlanCompleteAction = TaskCompleteAction<{ content: string }, 'plan'>
@@ -40,6 +41,7 @@ export type GGBScriptExcuteAction = Action<{ content: string }, 'ggbscript-excut
 export type ClientAction =
   | TextAction
   | PageCreateAction
+  | EndAction
   | PlanTaskAction
   | PlanCompleteAction
   | TaskAction<object, string>

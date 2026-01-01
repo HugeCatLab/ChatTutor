@@ -58,6 +58,8 @@ export const createBlockParser = ({ pages, emit, emitText }: BlockParserOptions)
   let blockMeta: BlockMeta | null = null
   type State = 'idle' | 'await_head' | 'in_block' | 'in_plan'
   let state: State = 'idle'
+  let currentTaskId: string | null = null // Store taskId for current block
+  let planTaskId: string | null = null // Store taskId for current plan
   
   const flushPlainText = () => {
     if (!buffer || blockMeta) return
@@ -94,7 +96,6 @@ export const createBlockParser = ({ pages, emit, emitText }: BlockParserOptions)
   // Try to parse plan tags
   const tryParsePlan = (): boolean => {
     // Check for <plan> start tag
-    const taskId = crypto.randomUUID()
     const planStartIdx = buffer.indexOf(planStartTag)
     if (planStartIdx !== -1 && state === 'idle') {
       // Emit text before plan tag
@@ -108,10 +109,12 @@ export const createBlockParser = ({ pages, emit, emitText }: BlockParserOptions)
       buffer = buffer.slice(planStartIdx + planStartTag.length)
       state = 'in_plan'
       planContent = ''
+      // Generate and store taskId for this plan
+      planTaskId = crypto.randomUUID()
       // Emit plan-start action
       emit({
         type: 'task',
-        taskId,
+        taskId: planTaskId,
         taskType: 'plan',
       } as PlanTaskAction)
       return true
@@ -129,10 +132,11 @@ export const createBlockParser = ({ pages, emit, emitText }: BlockParserOptions)
         emit({
           type: 'task-complete',
           options: { content: planContent },
-          taskId,
+          taskId: planTaskId!,
           taskType: 'plan',
         } as PlanCompleteAction)
         planContent = ''
+        planTaskId = null // Clear taskId after completion
         return true
       }
     }
@@ -242,7 +246,6 @@ export const createBlockParser = ({ pages, emit, emitText }: BlockParserOptions)
   }
       
   const tryParse = () => {
-    const taskId = crypto.randomUUID()
     if (!blockMeta) {
       const fenceIdx = buffer.indexOf(fenceStart)
       if (fenceIdx === -1 && state === 'idle') {
@@ -274,8 +277,10 @@ export const createBlockParser = ({ pages, emit, emitText }: BlockParserOptions)
       if (resolverInfo) {
         ensurePage(pageId, resolverInfo.pageType || null, title)
       }
+      // Generate and store taskId for this block
+      currentTaskId = crypto.randomUUID()
       // Emit start action when block starts
-      emitStartAction(type, pageId, taskId)
+      emitStartAction(type, pageId, currentTaskId)
       return
     }
     // Inside a block, look for end fence
@@ -289,7 +294,8 @@ export const createBlockParser = ({ pages, emit, emitText }: BlockParserOptions)
     if (!endMatch || endMatch.index !== 0) return
     // Full block matched
     buffer = tail.slice(endMatch[0].length)
-    finishBlock(content, taskId)
+    finishBlock(content, currentTaskId!)
+    currentTaskId = null // Clear taskId after completion
     state = 'idle'
   }
 

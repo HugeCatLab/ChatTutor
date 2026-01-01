@@ -2,7 +2,7 @@ import { chat } from '@chat-tutor/db/schema'
 import { db } from '@chat-tutor/db'
 import { eq } from 'drizzle-orm'
 import { ClientAction, ClientMessage, Context, createMessageResolver, Status, UserAction } from '@chat-tutor/shared'
-import { createAgent } from '@chat-tutor/agent'
+import { AgentProvider, createAgent } from '@chat-tutor/agent'
 import { ModelMessage } from 'ai'
 
 export const getChats = async (limit: number, offset: number) => {
@@ -106,6 +106,7 @@ export const createChatStream = () => {
     apiKey: process.env.MODEL_API_KEY!,
     baseURL: process.env.MODEL_BASE_URL!,
     model: process.env.AGENT_MODEL!,
+    provider: process.env.AGENT_MODEL_PROVIDER as AgentProvider,
   })
   return {
     update,
@@ -118,7 +119,7 @@ export const createChatStream = () => {
           emit,
           images: [],
         })
-        console.log(agentContext, messages)
+        console.log(agentContext.length)
       }
     },
   }

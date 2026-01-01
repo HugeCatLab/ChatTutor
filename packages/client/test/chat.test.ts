@@ -28,7 +28,7 @@ describe('chat', () => {
           action: {
             type: 'user-input',
             options: {
-              prompt: '我想学习三角函数',
+              prompt: '我想学习三角函数的周期性',
             },
           },
         })
