@@ -11,6 +11,8 @@
   },
   "packageManager": "pnpm@10.8.1",
   "dependencies": {
+    "@ai-sdk/anthropic": "^3.0.2",
+    "@ai-sdk/openai": "^3.0.2",
     "@chat-tutor/shared": "workspace:*",
     "@types/node": "^24.10.0",
     "ai": "^6.0.3",

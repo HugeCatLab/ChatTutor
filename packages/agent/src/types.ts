@@ -1,3 +1,4 @@
+import type { ClientAction } from '@chat-tutor/shared'
 import type { ModelMessage } from 'ai'
 
 export interface AgentOptions {
@@ -8,8 +9,9 @@ export interface AgentOptions {
 }
 
 export interface AgentInput {
-  user: string
+  prompt: string
+  emit: AgentEmitter
   images?: string[]
 }
 
-export type AgentChunker<T = unknown> = (chunk: T) => void
+export type AgentEmitter<T = ClientAction> = (action: T) => void

@@ -5,17 +5,16 @@ import { PageType } from '@chat-tutor/shared'
 import type { BasePage, Action, PlanTaskAction, PlanCompleteAction, PageCreateAction, NoteTaskAction, MermaidTaskAction, GGBTaskAction, ClientAction, NoteCompleteAction } from '@chat-tutor/shared'
 import { MermaidCompleteAction } from '@chat-tutor/shared'
 import { GGBCompleteAction } from '@chat-tutor/shared'
+import type { AgentEmitter } from '../types'
 
 export type BlockResolver = (context: {
   page: BasePage
   content: string
-}, emit: Emit) => Action<object, string> | void
-
-type Emit = (action: ClientAction | void) => void
+}, emit: AgentEmitter) => Action<object, string> | void
 
 export interface BlockParserOptions {
   pages: BasePage[]
-  emit: Emit                // create page / set-mermaid etc TODO: set note
+  emit: AgentEmitter                // create page / set-mermaid etc TODO: set note
   emitText: (chunk: string) => void // 继续输出普通文本
 }
 

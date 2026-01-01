@@ -1,5 +1,6 @@
 import { ClientAction } from './action'
-import { AgentClientMessage, ClientMessage, isDelayedMessage, PageCreateClientMessage } from './client-message'
+import { AgentClientMessage, ClientMessage, isDelayedMessage, PageCreateClientMessage, UserClientMessage } from './client-message'
+import { UserAction } from './user-action'
 
 export interface MessageResolverOptions {
   messages: ClientMessage[]
@@ -11,8 +12,15 @@ export const createMessageResolver = (options: MessageResolverOptions) => {
     return options.messages.find(message => isDelayedMessage(message) && message.taskId === taskId)
   }
 
-  return (action: ClientAction) => {
+  return (action: ClientAction | UserAction) => {
     switch (action.type) {
+      case 'user-input':
+        options.messages.push({
+          type: 'user',
+          id: options.uuid(),
+          content: action.options.prompt,
+        } satisfies UserClientMessage)
+        break
       case 'text':
         const shouldCreate = options.messages.at(-1)?.type !== 'agent'
         if (shouldCreate) {

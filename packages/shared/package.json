@@ -3,5 +3,8 @@
   "version": "1.0.0",
   "exports": {
     ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "ai": "^6.0.3"
   }
 }
