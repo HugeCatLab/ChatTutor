@@ -14,7 +14,9 @@ const store = useCreateChatStore()
 const router = useRouter()
 
 const handleSend = async (message: string, attachments: Resource[]) => {
-  const { data, error } = await client.chat.post({})
+  const { data, error } = await client.chat.post({
+    input: message,
+  })
   if (error) {
     return
   }

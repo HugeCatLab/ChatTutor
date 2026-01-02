@@ -1,8 +1,8 @@
 import { chat } from '@chat-tutor/db/schema'
 import { db } from '@chat-tutor/db'
-import { eq } from 'drizzle-orm'
+import { desc, eq } from 'drizzle-orm'
 import { ClientAction, ClientMessage, Context, createMessageResolver, Page, Status, UserAction } from '@chat-tutor/shared'
-import { AgentProvider, createAgent } from '@chat-tutor/agent'
+import { AgentProvider, createAgent, getTitle } from '@chat-tutor/agent'
 import { ModelMessage } from 'ai'
 import { ChatIsRunningError } from './error'
 
@@ -16,6 +16,7 @@ export const getChats = async (limit: number, offset: number) => {
       updatedAt: chat.updatedAt,
     })
     .from(chat)
+    .orderBy(desc(chat.createdAt))
     .limit(limit)
     .offset(offset)
     return chats
@@ -26,7 +27,16 @@ export const getChats = async (limit: number, offset: number) => {
   
 }
 
-export const createChat = async () => {
+export const updateChatTitle = async (id: string, title: string) => {
+  await db
+    .update(chat)
+    .set({
+      title,
+    })
+    .where(eq(chat.id, id))
+}
+
+export const createChat = async (input: string) => {
   const [{ id }] = await db
     .insert(chat)
     .values({
@@ -36,6 +46,14 @@ export const createChat = async () => {
     .returning({
       id: chat.id
     })
+  getTitle({
+    apiKey: process.env.MODEL_API_KEY!,
+    baseURL: process.env.MODEL_BASE_URL!,
+    model: process.env.TITLE_MODEL || process.env.AGENT_MODEL!,
+    provider: (process.env.TITLE_MODEL_PROVIDER || process.env.AGENT_MODEL_PROVIDER) as AgentProvider,
+  }, input).then(title => {
+    updateChatTitle(id, title)
+  })
   return id
 }
 

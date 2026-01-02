@@ -8,7 +8,9 @@ export const GetModel = {
 }
 
 export const PostModel = {
-  body: z.object({})
+  body: z.object({
+    input: z.string(),
+  }),
 }
 
 export const GetByIdModel = {

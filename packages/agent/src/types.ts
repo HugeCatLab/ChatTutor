@@ -15,6 +15,7 @@ export const convertResources = (resources: Resource[]): (ImagePart)[] => {
 export type AgentProvider =
   | 'openai'
   | 'anthropic'
+  | 'deepseek'
 
 export interface AgentOptions {
   apiKey: string

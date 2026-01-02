@@ -1,5 +1,6 @@
 import { createOpenAI } from '@ai-sdk/openai'
 import { createAnthropic } from '@ai-sdk/anthropic'
+import { createDeepSeek } from '@ai-sdk/deepseek'
 import { AgentProvider } from './types'
 
 export interface GatewayOptions {
@@ -12,6 +13,7 @@ export const createGateway = ({ apiKey, baseURL, provider = 'openai' }: GatewayO
   const providers = {
     'openai': createOpenAI,
     'anthropic': createAnthropic,
+    'deepseek': createDeepSeek,
   }
   return providers[provider]({
     apiKey,

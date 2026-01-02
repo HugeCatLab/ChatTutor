@@ -14,13 +14,14 @@ const items = ref<Item[]>([])
 const fetchItems = async () => {
   const { data, error } = await client.chat.get({
     query: {
-      limit: 10,
+      limit: 15,
       offset: 0,
     }
   })
   if (error || !data) {
     return
   }
+  console.log(data)
   items.value = data.map((item) => ({
     title: item.title,
     url: `/chat/${item.id}`,
@@ -38,7 +39,7 @@ onUnmounted(() => {
 <template>
   <SidebarGroup>
     <SidebarGroupLabel>Recent</SidebarGroupLabel>
-    <SidebarGroupContent>
+    <SidebarGroupContent class="overflow-y-auto">
       <SidebarMenu>
         <SidebarMenuItem
           v-for="item in items"
