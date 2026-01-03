@@ -19,5 +19,9 @@ export default defineConfig({
   server: {
     port: 8001
   },
+  preview: {
+    allowedHosts: true,
+    port: 8001,
+  },
   envDir: '../../',
 })
