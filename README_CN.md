@@ -5,7 +5,7 @@
 
 <div align="center">
 
-  <img src="./public/logo.png" alt="ChatTutor" width="150" height="150" />
+  <img src="./assets/logo.png" alt="ChatTutor" width="150" height="150" />
 
   <h1>ChatTutor</h1>
 
@@ -40,89 +40,46 @@ ChatTutor 有效地解决了这一问题。它将现实教育场景中的各种�
 <table>
   <tr>
     <td>
-      <img src="./public/demo1.png" alt="Math Canvas" width="100%" />
+      <img src="./assets/demo-math-1.png" alt="Math Canvas" width="100%" />
     </td>
     <td>
-      <img src="./public/demo2.png" alt="Math Canvas" width="100%" />
+      <img src="./assets/demo-math-2.png" alt="Math Canvas" width="100%" />
     </td>
   </tr>
   <tr>
     <td>
-      <img src="./public/demo3.png" alt="Math Canvas" width="100%" />
+      <img src="./assets/demo-math-3.png" alt="Math Canvas" width="100%" />
+    </td>
+    <td>
+      <img src="./assets/demo-math-4.png" alt="Math Canvas" width="100%" />
     </td>
   </tr>
 </table>
-
-##### 代码页面 (🚧 WIP)
 
 ##### 思维导图
 <table>
   <tr>
     <td>
-      <img src="./public/demo4.png" alt="Mindmap" width="100%" />
+      <img src="./assets/demo-mermaid-1.png" alt="Mindmap" width="100%" />
     </td>
     <td>
-      <img src="./public/demo5.png" alt="Mindmap" width="100%" />
+      <img src="./assets/demo-mermaid-2.png" alt="Mindmap" width="100%" />
     </td>
   </tr>
 </table>
 
-##### 物理画板 (🚧 WIP)
+## Tech Stacks
 
-##### 数字逻辑画板 (🚧 WIP)
+- [Geogebra](https://www.geogebra.org/)
+- [Vue](https://vuejs.org/)
+- [Vite](https://vitejs.dev)
+- [ElysiaJs](https://https://elysiajs.com/)
+- [AI SDK](https://ai-sdk.dev/)
 
-##### AI 为用户自动生成题目与解答 (🚧 WIP)
-
-
-## Roadmap
-请参考我们的 [v0.1 路线图](https://github.com/HugeCatLab/ChatTutor/issues/1) 以了解详细计划。
-
-## 快速开始
-
-### 环境要求
-
-- Node.js >= 20
-- Docker
-
-### 环境变量配置
-
-```bash
-cp .env.example .env
-```
-
-在 `.env` 文件中填写你的配置信息：
-
-- `API_KEY`: 所使用的 API 密钥。
-- `BASE_URL`: 接口基础地址。
-- `AGENT_MODEL`: 用于 Agent 的模型。
-- `TITLE_MODEL`: 用于生成聊天标题的模型。(可选，默认与 `AGENT_MODEL` 相同)
-- `DATABASE_URL`: Postgres 数据库连接地址。
-
-> [!WARNING]
->
-> 如果你没有设置这些环境变量，图像将不可用。
-- `OSS_ENDPOINT`: 对象存储服务的端点。
-- `OSS_ACCESS_KEY`: 对象存储服务的访问密钥。
-- `OSS_SECRET_KEY`: 对象存储服务的秘密密钥。
-- `OSS_BUCKET`: 对象存储服务的桶。
-- `OSS_REGION`: 对象存储服务的区域。(可选)
-
-### 运行
-
-```bash
-git clone https://github.com/HugeCatLab/ChatTutor.git
-cd ChatTutor
-docker compose up -d
-```
-
-## 核心功能所用项目
-
-- [xsai](https://github.com/moeru-ai/xsai): 轻量级 AI SDK。
-
-## 赞助商
+## Sponsors
 我们的赞助商列表如下（排名不分先后）：
 
-- [AiHubMix](https://aihubmix.com/): 开放模型API平台。
+- [AiHubMix](https://aihubmix.com/): 开放模型 API 平台。
 
 ## Star History
 
@@ -131,4 +88,4 @@ docker compose up -d
 ---
 **AGPL v3 License**
 
-*版权  (c) 2025 Acbox, 保留所有权利。*
+*版权 (c) 2025 Acbox, 保留所有权利。*

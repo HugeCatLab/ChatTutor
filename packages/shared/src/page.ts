@@ -1,16 +1,23 @@
-import type { Action, FullAction } from './action'
+import { Action } from './action'
+
+export interface BasePage {
+  id: string
+  title: string
+  type: string
+  steps: Action<object, string>[]
+}
 
 export enum PageType {
-  TEXT = 'text',
-  PAGE = 'page',
   MERMAID = 'mermaid',
   GGB = 'ggb',
 }
 
-export interface Page<T extends Action = FullAction, A extends string = string> {
-  type: A
-  title: string
-  id?: string
-  steps: T[]
-  notes: string[]
+export interface GGBPage extends BasePage {
+  type: PageType.GGB
 }
+
+export interface MermaidPage extends BasePage {
+  type: PageType.MERMAID
+}
+
+export type Page = GGBPage | MermaidPage

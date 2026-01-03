@@ -1,10 +1,35 @@
-import type { Message } from 'xsai'
+import type { ClientAction, Page, Resource } from '@chat-tutor/shared'
+import type { ImagePart, ModelMessage } from 'ai'
 
-export interface BaseAgentOptions {
+export const convertResources = (resources: Resource[]): (ImagePart)[] => {
+  return resources.map(resource => {
+    if (resource.type === 'image') {
+      return {
+        type: 'image' as const,
+        image: resource.url,
+      }
+    }
+  }).filter((r) => r !== undefined)
+}
+
+export type AgentProvider =
+  | 'openai'
+  | 'anthropic'
+  | 'deepseek'
+
+export interface AgentOptions {
+  messages: ModelMessage[]
+  pages: Page[]
+}
+
+export interface AgentInput {
   apiKey: string
   baseURL: string
   model: string
-  messages: Message[]
+  provider?: AgentProvider
+  prompt: string
+  emit: AgentEmitter
+  resources?: Resource[]
 }
 
-export type AgentChunker<T = unknown> = (chunk: T) => void
+export type AgentEmitter<T = ClientAction> = (action: T) => void

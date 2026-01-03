@@ -5,7 +5,7 @@
 
 <div align="center">
 
-  <img src="./public/logo.png" alt="ChatTutor" width="150" height="150" />
+  <img src="./assets/logo.png" alt="ChatTutor" width="150" height="150" />
 
   <h1>ChatTutor</h1>
 
@@ -40,83 +40,41 @@ ChatTutor effectively solves this problem by bringing all the teaching tools use
 <table>
   <tr>
     <td>
-      <img src="./public/demo1.png" alt="Math Canvas" width="100%" />
+      <img src="./assets/demo-math-1.png" alt="Math Canvas" width="100%" />
     </td>
     <td>
-      <img src="./public/demo2.png" alt="Math Canvas" width="100%" />
+      <img src="./assets/demo-math-2.png" alt="Math Canvas" width="100%" />
     </td>
   </tr>
   <tr>
     <td>
-      <img src="./public/demo3.png" alt="Math Canvas" width="100%" />
+      <img src="./assets/demo-math-3.png" alt="Math Canvas" width="100%" />
+    </td>
+    <td>
+      <img src="./assets/demo-math-4.png" alt="Math Canvas" width="100%" />
     </td>
   </tr>
 </table>
-
-##### Code Page (🚧 WIP)
 
 ##### Mindmap
 <table>
   <tr>
     <td>
-      <img src="./public/demo4.png" alt="Mindmap" width="100%" />
+      <img src="./assets/demo-mermaid-1.png" alt="Mindmap" width="100%" />
     </td>
     <td>
-      <img src="./public/demo5.png" alt="Mindmap" width="100%" />
+      <img src="./assets/demo-mermaid-2.png" alt="Mindmap" width="100%" />
     </td>
   </tr>
 </table>
 
-##### Physics Canvas (🚧 WIP)
+## Tech Stacks
 
-##### Digital Logic Canvas (🚧 WIP)
-
-##### Problem Solving created by AI to user (🚧 WIP)
-
-## Roadmap
-Please refer to our [Roadmap v0.1](https://github.com/HugeCatLab/ChatTutor/issues/1) for the detailed roadmap
-
-## Quick Start
-
-### Environment
-
-- Node.js >= 20
-- Docker
-
-### Environment Variables
-
-```bash
-cp .env.example .env
-```
-
-Fill your config in `.env` file.
-
-- `API_KEY`: The API key to use.
-- `BASE_URL`: The base URL to use.
-- `AGENT_MODEL`: The model to use for the agent.
-- `TITLE_MODEL`: The model to use for generate chat title (optional, default to `AGENT_MODEL`)
-- `DATABASE_URL`: The Postgres URL to use.
-
-> [!WARNING]
->
-> If you don't set them, images will be unavailable.
-- `OSS_ENDPOINT`: The OSS endpoint to use.
-- `OSS_ACCESS_KEY`: The OSS access key to use.
-- `OSS_SECRET_KEY`: The OSS secret key to use.
-- `OSS_BUCKET`: The OSS bucket to use.
-- `OSS_REGION`: The OSS region to use. (optional)
-
-### Run
-
-```bash
-git clone https://github.com/HugeCatLab/ChatTutor.git
-cd ChatTutor
-docker compose up -d
-```
-
-## Projects Used on Core Features
-
-- [xsai](https://github.com/moeru-ai/xsai): Extra-small AI SDK.
+- [Geogebra](https://www.geogebra.org/)
+- [Vue](https://vuejs.org/)
+- [Vite](https://vitejs.dev)
+- [ElysiaJs](https://https://elysiajs.com/)
+- [AI SDK](https://ai-sdk.dev/)
 
 ## Sponsors
 Our sponsors are listed as follows (in no particular order):

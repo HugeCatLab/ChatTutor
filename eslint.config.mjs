@@ -1,15 +1,14 @@
 // @ts-check
-import { withNuxt } from "./.nuxt/eslint.config.mjs";
-import vueParser from "vue-eslint-parser";
-import tseslint from "typescript-eslint";
-import vue from "eslint-plugin-vue";
+import vueParser from 'vue-eslint-parser'
+import tseslint from 'typescript-eslint'
+import vue from 'eslint-plugin-vue'
 
-export default withNuxt([
+export default [
   ...tseslint.configs.recommended,
   ...vue.configs['flat/recommended'],
   { ignores: ['**/node_modules/**', '**/dist/**'] },
   {
-    files: ['{app,packages,server,shared}/**/*.{js,jsx,ts,tsx}'],
+    files: ['packages/**/*.{js,jsx,ts,tsx}'],
     languageOptions: {
       parserOptions: {
         ecmaVersion: 2022,
@@ -23,7 +22,7 @@ export default withNuxt([
     },
   },
   {
-    files: ['app/**/*.vue'],
+    files: ['packages/**/*.vue'],
     languageOptions: {
       parser: vueParser,
       parserOptions: {
@@ -41,4 +40,4 @@ export default withNuxt([
       'vue/multi-word-component-names': 'off',
     },
   },
-])
+]

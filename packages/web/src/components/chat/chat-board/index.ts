@@ -1,0 +1,1 @@
+export { default as ChatBoard } from './board.vue'

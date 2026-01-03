@@ -7,7 +7,7 @@ export default defineConfig({
   test: {
     globals: true,
     include: [
-      '{packages}/**/*.test.ts',
+      'packages/**/*.test.ts',
     ],
     env: process.env,
     testTimeout: Infinity,

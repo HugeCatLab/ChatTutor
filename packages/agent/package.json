@@ -11,8 +11,12 @@
   },
   "packageManager": "pnpm@10.8.1",
   "dependencies": {
+    "@ai-sdk/anthropic": "^3.0.2",
+    "@ai-sdk/deepseek": "^2.0.2",
+    "@ai-sdk/openai": "^3.0.2",
     "@chat-tutor/shared": "workspace:*",
     "@types/node": "^24.10.0",
+    "ai": "^6.0.3",
     "arktype": "^2.1.25",
     "dotenv": "^17.2.3",
     "xsai": "0.4.0-beta.8"

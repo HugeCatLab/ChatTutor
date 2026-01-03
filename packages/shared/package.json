@@ -1,14 +1,10 @@
 {
   "name": "@chat-tutor/shared",
-  "version": "0.0.1",
-  "main": "index.js",
-  "type": "module",
+  "version": "1.0.0",
   "exports": {
     ".": "./src/index.ts"
   },
-  "scripts": {},
-  "packageManager": "pnpm@10.8.1",
   "dependencies": {
-    "arktype": "^2.1.25"
+    "ai": "^6.0.3"
   }
 }

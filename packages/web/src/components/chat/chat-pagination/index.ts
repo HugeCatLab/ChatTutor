@@ -1,0 +1,1 @@
+export { default as ChatPagination } from './pagination.vue'

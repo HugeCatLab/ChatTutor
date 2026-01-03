@@ -31,3 +31,5 @@ cache
 
 # PNPM
 .pnpm-store
+
+backup

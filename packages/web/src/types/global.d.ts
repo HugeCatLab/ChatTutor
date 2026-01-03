@@ -1,0 +1,1 @@
+/// <reference types="@chat-tutor/ggb-applet" />
