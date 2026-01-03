@@ -1,15 +1,24 @@
-# Elysia with Bun runtime
+# @chat-tutor/client
 
-## Getting Started
-To get started with this template, simply paste this command into your terminal:
-```bash
-bun create elysia ./elysia-example
-```
+## Environment
+
+- Bun >= 1.2
 
 ## Development
-To start the development server run:
+
 ```bash
-bun run dev
+pnpm dev
 ```
 
-Open http://localhost:3000/ with your browser to see the result.
+## Build & Run
+
+```bash
+pnpm build
+pnpm start
+```
+
+---
+
+**AGPL v3 License**
+
+*Copyright (c) 2025 Acbox, All rights reserved.*
