@@ -260,6 +260,9 @@ export const createChatStream = () => {
         await updateChatStatus(id, isAbort ? Status.COMPLETED : Status.FAILED)
         throw error
       } finally {
+        if (controller && !controller.signal.aborted) {
+          controller.abort()
+        }
         controller = null
       }
     },
