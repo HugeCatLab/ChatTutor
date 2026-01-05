@@ -15,6 +15,7 @@ const {
   running,
   sync,
   ask,
+  stop,
   switchPage
 } = useChat(route.params.id as string)
 
@@ -67,6 +68,7 @@ onMounted(async () => {
         v-model:messages="messages"
         :running="running"
         @send="(input, resources) => ask(input, resources)"
+        @stop="stop"
       />
     </div>
   </div>

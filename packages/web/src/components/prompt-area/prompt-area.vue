@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { Button, Spinner, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger, Kbd, KbdGroup } from '@chat-tutor/ui'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faPaperPlane, faImage } from '@fortawesome/free-solid-svg-icons'
+import { faPaperPlane, faImage, faStop } from '@fortawesome/free-solid-svg-icons'
 import type { PromptAreaProps, PromptAreaEmits } from './types'
 import type { Resource } from '@chat-tutor/shared'
 import ImagePreview from './image-preview.vue'
@@ -36,7 +36,10 @@ const focus = () => {
 
 // Send message
 const sendUserInput = () => {
-  if (props.running) return
+  if (props.running) {
+    emits('stop')
+    return
+  }
   if (input.value.trim() === '' && resources.value.length === 0) return
 
   blur()
@@ -240,12 +243,13 @@ defineExpose({
           <TooltipTrigger as-child>
             <!-- Send button -->
             <Button
-              :disabled="running || (input.trim() === '' && resources.length === 0)"
+              :disabled="!running && (input.trim() === '' && resources.length === 0)"
               size="sm"
               @click="sendUserInput"
             >
-              <Spinner
+              <FontAwesomeIcon
                 v-if="running"
+                :icon="faStop"
                 class="size-4"
               />
               <FontAwesomeIcon
@@ -258,6 +262,12 @@ defineExpose({
                 class="hidden md:inline"
               >
                 {{ t('chat.send') }}
+              </span>
+              <span
+                v-else
+                class="hidden md:inline"
+              >
+                {{ t('chat.stop') }}
               </span>
             </Button>
           </TooltipTrigger>

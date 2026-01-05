@@ -30,6 +30,7 @@ export interface AgentInput {
   prompt: string
   emit: AgentEmitter
   resources?: Resource[]
+  signal?: AbortSignal
 }
 
 export type AgentEmitter<T = ClientAction> = (action: T) => void

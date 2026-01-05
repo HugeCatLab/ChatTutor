@@ -1,4 +1,4 @@
-import type { Resource, UserInputAction } from '@chat-tutor/shared'
+import type { Resource, UserInputAction, UserAbortAction } from '@chat-tutor/shared'
 import { client } from '#/utils/client'
 import { createMessageResolver, type ClientAction, type ClientMessage, type Page } from '@chat-tutor/shared'
 import type { EdenWS } from '@elysiajs/eden/treaty'
@@ -107,6 +107,18 @@ export const useChat = (id: string) => {
     resolveAction(action)
   }
 
+  const stop = () => {
+    if (!stream.value || !running.value) return
+    const action: UserAbortAction = {
+      type: 'user-abort',
+      options: {},
+    }
+    stream.value.send({
+      action,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } as any)
+  }
+
   return {
     messages,
     pages,
@@ -114,6 +126,7 @@ export const useChat = (id: string) => {
     running,
     sync,
     ask,
+    stop,
     switchPage,
   }
 }

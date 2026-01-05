@@ -33,7 +33,7 @@ export const createMessageResolver = ({ get, push, uuid }: MessageResolverOption
             content: '',
           })
         }
-        ; (<AgentClientMessage>messages.at(-1)).content += action.options.text
+        (<AgentClientMessage>messages.at(-1)).content += action.options.text
         break
       case 'task':
         switch (action.taskType) {

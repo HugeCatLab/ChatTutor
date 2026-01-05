@@ -6,5 +6,8 @@ export type UserInputAction = Action<{
   resources?: Resource[]
 }, 'user-input'>
 
+export type UserAbortAction = Action<object, 'user-abort'>
+
 export type UserAction =
   | UserInputAction
+  | UserAbortAction

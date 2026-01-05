@@ -19,6 +19,7 @@ let scrollTimeout: NodeJS.Timeout | null = null
 
 const emit = defineEmits<{
   send: [input: string, resources: Resource[]]
+  stop: []
 }>()
 
 const blur = () => {
@@ -108,6 +109,7 @@ onUnmounted(() => {
         v-model:resources="resources"
         :running="running"
         @send="handleSend"
+        @stop="$emit('stop')"
       />
     </div>
   </div>

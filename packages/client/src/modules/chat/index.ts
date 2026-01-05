@@ -52,7 +52,7 @@ export const chat = new Elysia({ prefix: '/chat' })
       },
       async message({ send, data }, message) {
         const { action } = message as { action: UserAction }
-        await act(data.params.id, action, send)
+        act(data.params.id, action, send).catch(console.error)
       },
     }
   })())

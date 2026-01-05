@@ -165,6 +165,7 @@ export const createChatStream = () => {
   let baseURL = process.env.MODEL_BASE_URL
   let model = process.env.AGENT_MODEL
   let provider = process.env.AGENT_MODEL_PROVIDER as AgentProvider
+  let controller: AbortController | null = null
   const update = async (id: string) => {
     const { context: c, messages: m, pages: p } = await getChatRecord(id)
     messages.length = 0
@@ -198,8 +199,16 @@ export const createChatStream = () => {
       if (query.model) model = query.model
       if (query.provider) provider = query.provider
     },
-    async act(id: string, input: UserAction, emit: (action: ClientAction) => void) {
+    async act(id: string, input: UserAction, emit: (action: ClientAction) => void) {      
+      if (input.type === 'user-abort') {
+        if (controller) {
+          controller.abort()
+        }
+        return
+      }
+
       await update(id)
+      
       resolve(input)
       try {
         if (input.type === 'user-input') {
@@ -207,6 +216,8 @@ export const createChatStream = () => {
           if (status === Status.RUNNING) {
             throw new ChatIsRunningError('Chat is already running')
           }
+          
+          controller = new AbortController()
           await updateChatStatus(id, Status.RUNNING)
           if (!apiKey || !baseURL || !model || !provider) {
             throw new AgentConfigError('Agent configuration is not set')
@@ -222,6 +233,7 @@ export const createChatStream = () => {
             baseURL,
             model,
             provider,
+            signal: controller.signal,
           })
           await updateChatRecord({
             id,
@@ -233,9 +245,22 @@ export const createChatStream = () => {
           })
           await updateChatStatus(id, Status.COMPLETED)
         }
-      } catch (error) {
-        await updateChatStatus(id, Status.FAILED)
+      } catch (error: any) {
+        if (controller) {
+          await updateChatRecord({
+            id,
+            context: {
+              agent: agentContext,
+            },
+            messages,
+            pages,
+          })
+        }
+        const isAbort = error.name === 'AbortError' || error.message?.includes('aborted')
+        await updateChatStatus(id, isAbort ? Status.COMPLETED : Status.FAILED)
         throw error
+      } finally {
+        controller = null
       }
     },
   }
